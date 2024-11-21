@@ -1,0 +1,382 @@
+definitions:
+  domain.CreateViewPermissionBody:
+    properties:
+      permission_id:
+        description: 'Description: the id of the permission'
+        example: 18f7f9c2-b00a-42e4-a469-ea4c01c180dd
+        type: string
+    required:
+    - permission_id
+    type: object
+  domain.Module:
+    properties:
+      code:
+        description: 'Description: the code of the module'
+        example: "2"
+        type: string
+      created_at:
+        description: 'Description: the date of creation of the module'
+        example: "2024-01-31 08:10:00"
+        type: string
+      description:
+        description: 'Description: the description of the module'
+        example: activo fijo
+        type: string
+      icon:
+        description: 'Description: the icon of the module'
+        example: activo fijo
+        type: string
+      id:
+        description: 'Description: the id of the module'
+        example: 18f7f9c2-b00a-42e4-a469-ea4c01c180dd
+        type: string
+      name:
+        description: 'Description: the name of the module'
+        example: activo fijo
+        type: string
+      position:
+        description: 'Description: the position of the module'
+        example: 2
+        type: integer
+    required:
+    - code
+    - description
+    - icon
+    - id
+    - name
+    - position
+    type: object
+  domain.PaginationResults:
+    properties:
+      current_page:
+        type: integer
+      from:
+        type: integer
+      last_page:
+        type: integer
+      size_page:
+        type: integer
+      to:
+        type: integer
+      total:
+        type: integer
+    required:
+    - current_page
+    - last_page
+    - size_page
+    - total
+    type: object
+  domain.Permission:
+    properties:
+      code:
+        description: 'Description: the code of the permission'
+        example: "2"
+        type: string
+      created_at:
+        description: 'Description: the date of creation of the permission'
+        example: "2024-01-31 08:10:00"
+        type: string
+      description:
+        description: 'Description: the description of the permission'
+        example: activo fijo
+        type: string
+      id:
+        description: 'Description: the id of the permission'
+        example: 18f7f9c2-b00a-42e4-a469-ea4c01c180dd
+        type: string
+      module:
+        $ref: '#/definitions/domain.Module'
+      name:
+        description: 'Description: the name of the permission'
+        example: activo fijo
+        type: string
+    required:
+    - code
+    - description
+    - id
+    - module
+    - name
+    type: object
+  domain.UpdateViewPermissionBody:
+    properties:
+      permission_id:
+        description: 'Description: the id of the permission'
+        example: 18f7f9c2-b00a-42e4-a469-ea4c01c180dd
+        type: string
+    required:
+    - permission_id
+    type: object
+  domain.View:
+    properties:
+      created_at:
+        description: 'Description: the date of creation of the view'
+        example: "2024-01-31 08:10:00"
+        type: string
+      description:
+        description: 'Description: the description of the view'
+        example: activo fijo
+        type: string
+      id:
+        description: 'Description: the id of the view'
+        example: 18f7f9c2-b00a-42e4-a469-ea4c01c180dd
+        type: string
+      name:
+        description: 'Description: the name of the view'
+        example: activo fijo
+        type: string
+    required:
+    - description
+    - id
+    - name
+    type: object
+  domain.ViewPermission:
+    properties:
+      created_at:
+        description: 'Description: the date of creation of the view permission'
+        example: "2024-01-31 08:10:00"
+        type: string
+      created_by:
+        description: 'Description: the description of the view permission'
+        example: 91fb86bd-da46-414b-97a1-fcdaa8cd35d1
+        type: string
+      id:
+        description: 'Description: id of the view permission'
+        example: 18f7f9c2-b00a-42e4-a469-ea4c01c180dd
+        type: string
+      permissions:
+        $ref: '#/definitions/domain.Permission'
+      view:
+        $ref: '#/definitions/domain.View'
+    required:
+    - created_by
+    - id
+    - permissions
+    - view
+    type: object
+  errorDomain.LayerErr:
+    enum:
+    - domain
+    - infrastructure
+    - interface
+    - use_case
+    type: string
+    x-enum-varnames:
+    - Domain
+    - Infra
+    - Interface
+    - UseCase
+  errorDomain.LevelErr:
+    enum:
+    - info
+    - warning
+    - error
+    - fatal
+    type: string
+    x-enum-varnames:
+    - LevelInfo
+    - LevelWarning
+    - LevelError
+    - LevelFatal
+  errorDomain.SmartError:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      error: {}
+      function:
+        type: string
+      httpStatus:
+        type: integer
+      layer:
+        $ref: '#/definitions/errorDomain.LayerErr'
+      level:
+        $ref: '#/definitions/errorDomain.LevelErr'
+      messages:
+        items:
+          type: string
+        type: array
+      raw:
+        type: string
+    type: object
+  httpResponse.IdResult:
+    properties:
+      data:
+        example: "201"
+        type: string
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  httpResponse.StatusResult:
+    properties:
+      status:
+        example: 200
+        type: integer
+    required:
+    - status
+    type: object
+  rest.deleteViewPermissionsResult:
+    properties:
+      data:
+        type: boolean
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  rest.viewPermissionsResult:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.ViewPermission'
+        type: array
+      pagination:
+        $ref: '#/definitions/domain.PaginationResults'
+      status:
+        type: integer
+    required:
+    - data
+    - pagination
+    - status
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/core/views/{viewId}/permissions:
+    get:
+      consumes:
+      - application/json
+      description: Get view permissions
+      parameters:
+      - description: View id
+        in: path
+        name: viewId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.viewPermissionsResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Get classifications view permissions
+      tags:
+      - View Permissions
+    post:
+      consumes:
+      - application/json
+      description: Create view permission
+      parameters:
+      - description: View id
+        in: path
+        name: viewId
+        required: true
+        type: string
+      - description: Create view permission body
+        in: body
+        name: ViewPermissionBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateViewPermissionBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.IdResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Create a view permission
+      tags:
+      - View Permissions
+  /api/v1/core/views/{viewId}/permissions/{viewPermissionId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete view permission
+      parameters:
+      - description: View id
+        in: path
+        name: viewId
+        required: true
+        type: string
+      - description: View Permissions id
+        in: path
+        name: viewPermissionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.deleteViewPermissionsResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Delete a view permission
+      tags:
+      - View Permissions
+    put:
+      consumes:
+      - application/json
+      description: Update view permission
+      parameters:
+      - description: View id
+        in: path
+        name: viewId
+        required: true
+        type: string
+      - description: View Permissions id
+        in: path
+        name: viewPermissionId
+        required: true
+        type: string
+      - description: Update view permission body
+        in: body
+        name: ViewPermissionBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateViewPermissionBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.StatusResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Update a view permission
+      tags:
+      - View Permissions
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

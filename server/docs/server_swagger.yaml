@@ -1,0 +1,101 @@
+definitions:
+  domain.ServerDate:
+    properties:
+      date_time:
+        description: 'Description: Date time'
+        example: "2023-10-10T00:00:00Z"
+        type: string
+      time_zone:
+        description: 'Description: Time zone'
+        example: UTC
+        type: string
+    required:
+    - date_time
+    - time_zone
+    type: object
+  errorDomain.LayerErr:
+    enum:
+    - domain
+    - infrastructure
+    - interface
+    - use_case
+    type: string
+    x-enum-varnames:
+    - Domain
+    - Infra
+    - Interface
+    - UseCase
+  errorDomain.LevelErr:
+    enum:
+    - info
+    - warning
+    - error
+    - fatal
+    type: string
+    x-enum-varnames:
+    - LevelInfo
+    - LevelWarning
+    - LevelError
+    - LevelFatal
+  errorDomain.SmartError:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      error: {}
+      function:
+        type: string
+      httpStatus:
+        type: integer
+      layer:
+        $ref: '#/definitions/errorDomain.LayerErr'
+      level:
+        $ref: '#/definitions/errorDomain.LevelErr'
+      messages:
+        items:
+          type: string
+        type: array
+      raw:
+        type: string
+    type: object
+  rest.ServerDateTimeResult:
+    properties:
+      data:
+        $ref: '#/definitions/domain.ServerDate'
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/core/server/datetime:
+    get:
+      consumes:
+      - application/json
+      description: get server datetime
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.ServerDateTimeResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: get datetime
+      tags:
+      - Server
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

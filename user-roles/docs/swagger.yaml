@@ -1,0 +1,311 @@
+definitions:
+  domain.CreateUserRoleBody:
+    properties:
+      enable:
+        description: 'Description: enable of the user role'
+        example: true
+        type: boolean
+      role_id:
+        description: 'Description: the role_id of the user role'
+        example: 739bbbc9-7e93-11ee-89fd-042hs5278420
+        type: string
+    required:
+    - enable
+    - role_id
+    type: object
+  domain.PaginationResults:
+    properties:
+      current_page:
+        type: integer
+      from:
+        type: integer
+      last_page:
+        type: integer
+      size_page:
+        type: integer
+      to:
+        type: integer
+      total:
+        type: integer
+    required:
+    - current_page
+    - last_page
+    - size_page
+    - total
+    type: object
+  domain.Role:
+    properties:
+      created_at:
+        description: 'Description: the date of created of the role'
+        example: 0000-00-00 00:00:00
+        type: string
+      description:
+        description: 'Description: the description of the role'
+        example: Gerencia del conglomerado2221
+        type: string
+      enable:
+        description: 'Description: the status of the role'
+        example: true
+        type: boolean
+      id:
+        description: 'Description: the id of the role'
+        example: 476a3664-d0d0-4476-8f12-fb11ae57122a
+        type: string
+      name:
+        description: 'Description: the name of the role'
+        example: Gerencia
+        type: string
+    required:
+    - created_at
+    - description
+    - enable
+    - id
+    - name
+    type: object
+  domain.UserRole:
+    properties:
+      created_at:
+        description: 'Description: the date of create the user role'
+        example: "2023-11-24 16:39:25"
+        type: string
+      enable:
+        description: 'Description: the status of the user role'
+        example: false
+        type: boolean
+      id:
+        description: Description:the id of the user role
+        example: 476a3664-d0d0-4476-8f12-fb11ae57122a
+        type: string
+      roles:
+        $ref: '#/definitions/domain.Role'
+    required:
+    - enable
+    - id
+    type: object
+  errorDomain.LayerErr:
+    enum:
+    - domain
+    - infrastructure
+    - interface
+    - use_case
+    type: string
+    x-enum-varnames:
+    - Domain
+    - Infra
+    - Interface
+    - UseCase
+  errorDomain.LevelErr:
+    enum:
+    - info
+    - warning
+    - error
+    - fatal
+    type: string
+    x-enum-varnames:
+    - LevelInfo
+    - LevelWarning
+    - LevelError
+    - LevelFatal
+  errorDomain.SmartError:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      error: {}
+      function:
+        type: string
+      httpStatus:
+        type: integer
+      layer:
+        $ref: '#/definitions/errorDomain.LayerErr'
+      level:
+        $ref: '#/definitions/errorDomain.LevelErr'
+      messages:
+        items:
+          type: string
+        type: array
+      raw:
+        type: string
+    type: object
+  httpResponse.IdResult:
+    properties:
+      data:
+        example: "201"
+        type: string
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  httpResponse.StatusResult:
+    properties:
+      status:
+        example: 200
+        type: integer
+    required:
+    - status
+    type: object
+  rest.deleteUserRolesResult:
+    properties:
+      data:
+        type: boolean
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  rest.userRolesResult:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.UserRole'
+        type: array
+      pagination:
+        $ref: '#/definitions/domain.PaginationResults'
+      status:
+        type: integer
+    required:
+    - data
+    - pagination
+    - status
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/core/users/{userId}/roles:
+    get:
+      consumes:
+      - application/json
+      description: get roles by user
+      parameters:
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.userRolesResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: get roles by user
+      tags:
+      - UserRoles
+    post:
+      consumes:
+      - application/json
+      description: Create user role
+      parameters:
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: Create user role body
+        in: body
+        name: createUserRoleBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateUserRoleBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.IdResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Create user role
+      tags:
+      - UserRoles
+  /api/v1/core/users/{userId}/roles{userRoleId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete user role
+      parameters:
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: user role id
+        in: path
+        name: userRoleId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.deleteUserRolesResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Delete a user role
+      tags:
+      - UserRoles
+    put:
+      consumes:
+      - application/json
+      description: Update user role
+      parameters:
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: user role id
+        in: path
+        name: userRoleId
+        required: true
+        type: string
+      - description: Update user role body
+        in: body
+        name: userRoleBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateUserRoleBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.StatusResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Update user role
+      tags:
+      - UserRoles
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

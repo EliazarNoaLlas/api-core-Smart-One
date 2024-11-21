@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: merchant-economic-activities-core-smartone-api-service
+  namespace: ${NAMESPACE}
+spec:
+  selector:
+    app: merchant-economic-activities-core-smartone
+  ports:
+    - protocol: TCP
+      port: 9016
+      targetPort: 80
+  type: NodePort

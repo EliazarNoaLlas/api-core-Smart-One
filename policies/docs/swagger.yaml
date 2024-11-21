@@ -1,0 +1,448 @@
+definitions:
+  domain.CreatePolicyBody:
+    properties:
+      description:
+        description: 'Description: the description of the created policy'
+        example: Politica para accesos a logistica requerimientos en todo el conglomerado
+        type: string
+      enable:
+        description: 'Description: enable of the created policy'
+        example: true
+        type: boolean
+      level:
+        description: 'Description: the level of the created policy'
+        example: system
+        type: string
+      merchant_id:
+        description: 'Description: the merchant_id of the created policy'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110019
+        type: string
+      module_id:
+        description: 'Description: the module_id of the created policy'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110018
+        type: string
+      name:
+        description: 'Description: the name of the created policy'
+        example: LOGISTICA_REQUERIMIENTOS_CONGLOMERADO
+        type: string
+      store_id:
+        description: 'Description: the store_id of the created policy'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110020
+        type: string
+    required:
+    - description
+    - level
+    - module_id
+    - name
+    type: object
+  domain.MerchantByPolicy:
+    properties:
+      description:
+        description: 'Description: the description of the merchant'
+        example: Proveedor de servicios de mantenimiento
+        type: string
+      document:
+        description: 'Description: the document of the merchant'
+        example: "123456789"
+        type: string
+      id:
+        description: 'Description: the id of the merchant'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+      name:
+        description: 'Description: the name of the merchant'
+        example: Odin Corp
+        type: string
+    type: object
+  domain.ModuleByPolicy:
+    properties:
+      code:
+        description: 'Description: the code of the module'
+        example: logistic
+        type: string
+      description:
+        description: 'Description: the description of the module'
+        example: Modulo de logística
+        type: string
+      id:
+        description: 'Description: the id of the module'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110018
+        type: string
+      name:
+        description: 'Description: the name of the module'
+        example: Logistic
+        type: string
+    type: object
+  domain.PaginationResults:
+    properties:
+      current_page:
+        type: integer
+      from:
+        type: integer
+      last_page:
+        type: integer
+      size_page:
+        type: integer
+      to:
+        type: integer
+      total:
+        type: integer
+    required:
+    - current_page
+    - last_page
+    - size_page
+    - total
+    type: object
+  domain.PermissionByPolicy:
+    properties:
+      code:
+        description: 'Description: the code of the permission'
+        example: REQUIREMENTS_READ
+        type: string
+      description:
+        description: 'Description: the description of the permission'
+        example: Permiso para listar requerimientos
+        type: string
+      id:
+        description: 'Description: the id of the permission'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110010
+        type: string
+      name:
+        description: 'Description: the name of the permission'
+        example: Listar requerimientos
+        type: string
+      policy_permission:
+        $ref: '#/definitions/domain.PolicyPermissionByPolicy'
+    type: object
+  domain.Policy:
+    properties:
+      created_at:
+        description: 'Description: the created_at of the policy'
+        example: "2023-11-10 08:10:00"
+        type: string
+      description:
+        description: 'Description: the description of the policy'
+        example: Politica para accesos a logistica requerimientos en todo el conglomerado
+        type: string
+      enable:
+        description: 'Description: enable of the policy'
+        example: true
+        type: boolean
+      id:
+        description: 'Description: the id of the policy'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+      level:
+        description: 'Description: the level of the policy'
+        example: system
+        type: string
+      merchant:
+        $ref: '#/definitions/domain.MerchantByPolicy'
+      module:
+        $ref: '#/definitions/domain.ModuleByPolicy'
+      name:
+        description: 'Description: the name of the policy'
+        example: LOGISTICA_REQUERIMIENTOS_CONGLOMERADO
+        type: string
+      permissions:
+        items:
+          $ref: '#/definitions/domain.PermissionByPolicy'
+        type: array
+      store:
+        $ref: '#/definitions/domain.StoreByPolicy'
+    required:
+    - description
+    - enable
+    - id
+    - level
+    - name
+    type: object
+  domain.PolicyPermissionByPolicy:
+    properties:
+      enable:
+        description: 'Description: enable of the policy permission'
+        example: true
+        type: boolean
+      id:
+        description: 'Description: the id of the policy permission'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110010
+        type: string
+    type: object
+  domain.StoreByPolicy:
+    properties:
+      id:
+        description: 'Description: the id of the store'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+      name:
+        description: 'Description: the name of the store'
+        example: Obra av. 28 julio
+        type: string
+      shortname:
+        description: 'Description: the shortname of the store'
+        example: Obra 28
+        type: string
+    type: object
+  domain.UpdatePolicyBody:
+    properties:
+      description:
+        description: 'Description: the description of the update policy'
+        example: Politica para accesos a logistica requerimientos en todo el conglomerado
+        type: string
+      enable:
+        description: 'Description: enable of the update policy'
+        example: true
+        type: boolean
+      level:
+        description: 'Description: the level of the update policy'
+        example: system
+        type: string
+      merchant_id:
+        description: 'Description: the merchant_id of the update policy'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110019
+        type: string
+      module_id:
+        description: 'Description: the module_id of the update policy'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110018
+        type: string
+      name:
+        description: 'Description: the name of the update policy'
+        example: LOGISTICA_REQUERIMIENTOS_CONGLOMERADO
+        type: string
+      store_id:
+        description: 'Description: the store_id of the update policy'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110020
+        type: string
+    required:
+    - description
+    - level
+    - module_id
+    - name
+    type: object
+  errorDomain.LayerErr:
+    enum:
+    - domain
+    - infrastructure
+    - interface
+    - use_case
+    type: string
+    x-enum-varnames:
+    - Domain
+    - Infra
+    - Interface
+    - UseCase
+  errorDomain.LevelErr:
+    enum:
+    - info
+    - warning
+    - error
+    - fatal
+    type: string
+    x-enum-varnames:
+    - LevelInfo
+    - LevelWarning
+    - LevelError
+    - LevelFatal
+  errorDomain.SmartError:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      error: {}
+      function:
+        type: string
+      httpStatus:
+        type: integer
+      layer:
+        $ref: '#/definitions/errorDomain.LayerErr'
+      level:
+        $ref: '#/definitions/errorDomain.LevelErr'
+      messages:
+        items:
+          type: string
+        type: array
+      raw:
+        type: string
+    type: object
+  httpResponse.IdResult:
+    properties:
+      data:
+        example: "201"
+        type: string
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  httpResponse.StatusResult:
+    properties:
+      status:
+        example: 200
+        type: integer
+    required:
+    - status
+    type: object
+  rest.deletePoliciesResult:
+    properties:
+      data:
+        type: boolean
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  rest.policiesResult:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.Policy'
+        type: array
+      pagination:
+        $ref: '#/definitions/domain.PaginationResults'
+      status:
+        type: integer
+    required:
+    - data
+    - pagination
+    - status
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/core/policies:
+    get:
+      consumes:
+      - application/json
+      description: get policies
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: size page
+        in: query
+        name: size_page
+        type: integer
+      - description: module id
+        in: query
+        name: module_id
+        type: string
+      - description: merchant id
+        in: query
+        name: merchant_id
+        type: string
+      - description: store id
+        in: query
+        name: store_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.policiesResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: get policies
+      tags:
+      - Policies
+    post:
+      consumes:
+      - application/json
+      description: Create a policy
+      parameters:
+      - description: Create policy body
+        in: body
+        name: createPolicyBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreatePolicyBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.IdResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Create a policy
+      tags:
+      - Policies
+  /api/v1/core/policies/{policyId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a policy
+      parameters:
+      - description: policy id
+        in: path
+        name: policyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.deletePoliciesResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Delete a policy
+      tags:
+      - Policies
+    put:
+      consumes:
+      - application/json
+      description: Update a policy
+      parameters:
+      - description: policy id
+        in: path
+        name: policyId
+        required: true
+        type: string
+      - description: Update policy body
+        in: body
+        name: updatePolicyBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdatePolicyBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.StatusResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Update a policy
+      tags:
+      - Policies
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

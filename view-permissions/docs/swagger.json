@@ -1,0 +1,550 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/core/views/{viewId}/permissions": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get view permissions",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "View Permissions"
+                ],
+                "summary": "Get classifications view permissions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "View id",
+                        "name": "viewId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/rest.viewPermissionsResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create view permission",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "View Permissions"
+                ],
+                "summary": "Create a view permission",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "View id",
+                        "name": "viewId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Create view permission body",
+                        "name": "ViewPermissionBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.CreateViewPermissionBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/httpResponse.IdResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/core/views/{viewId}/permissions/{viewPermissionId}": {
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update view permission",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "View Permissions"
+                ],
+                "summary": "Update a view permission",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "View id",
+                        "name": "viewId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "View Permissions id",
+                        "name": "viewPermissionId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update view permission body",
+                        "name": "ViewPermissionBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.UpdateViewPermissionBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/httpResponse.StatusResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Delete view permission",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "View Permissions"
+                ],
+                "summary": "Delete a view permission",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "View id",
+                        "name": "viewId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "View Permissions id",
+                        "name": "viewPermissionId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/rest.deleteViewPermissionsResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "domain.CreateViewPermissionBody": {
+            "type": "object",
+            "required": [
+                "permission_id"
+            ],
+            "properties": {
+                "permission_id": {
+                    "description": "Description: the id of the permission",
+                    "type": "string",
+                    "example": "18f7f9c2-b00a-42e4-a469-ea4c01c180dd"
+                }
+            }
+        },
+        "domain.Module": {
+            "type": "object",
+            "required": [
+                "code",
+                "description",
+                "icon",
+                "id",
+                "name",
+                "position"
+            ],
+            "properties": {
+                "code": {
+                    "description": "Description: the code of the module",
+                    "type": "string",
+                    "example": "2"
+                },
+                "created_at": {
+                    "description": "Description: the date of creation of the module",
+                    "type": "string",
+                    "example": "2024-01-31 08:10:00"
+                },
+                "description": {
+                    "description": "Description: the description of the module",
+                    "type": "string",
+                    "example": "activo fijo"
+                },
+                "icon": {
+                    "description": "Description: the icon of the module",
+                    "type": "string",
+                    "example": "activo fijo"
+                },
+                "id": {
+                    "description": "Description: the id of the module",
+                    "type": "string",
+                    "example": "18f7f9c2-b00a-42e4-a469-ea4c01c180dd"
+                },
+                "name": {
+                    "description": "Description: the name of the module",
+                    "type": "string",
+                    "example": "activo fijo"
+                },
+                "position": {
+                    "description": "Description: the position of the module",
+                    "type": "integer",
+                    "example": 2
+                }
+            }
+        },
+        "domain.PaginationResults": {
+            "type": "object",
+            "required": [
+                "current_page",
+                "last_page",
+                "size_page",
+                "total"
+            ],
+            "properties": {
+                "current_page": {
+                    "type": "integer"
+                },
+                "from": {
+                    "type": "integer"
+                },
+                "last_page": {
+                    "type": "integer"
+                },
+                "size_page": {
+                    "type": "integer"
+                },
+                "to": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "domain.Permission": {
+            "type": "object",
+            "required": [
+                "code",
+                "description",
+                "id",
+                "module",
+                "name"
+            ],
+            "properties": {
+                "code": {
+                    "description": "Description: the code of the permission",
+                    "type": "string",
+                    "example": "2"
+                },
+                "created_at": {
+                    "description": "Description: the date of creation of the permission",
+                    "type": "string",
+                    "example": "2024-01-31 08:10:00"
+                },
+                "description": {
+                    "description": "Description: the description of the permission",
+                    "type": "string",
+                    "example": "activo fijo"
+                },
+                "id": {
+                    "description": "Description: the id of the permission",
+                    "type": "string",
+                    "example": "18f7f9c2-b00a-42e4-a469-ea4c01c180dd"
+                },
+                "module": {
+                    "$ref": "#/definitions/domain.Module"
+                },
+                "name": {
+                    "description": "Description: the name of the permission",
+                    "type": "string",
+                    "example": "activo fijo"
+                }
+            }
+        },
+        "domain.UpdateViewPermissionBody": {
+            "type": "object",
+            "required": [
+                "permission_id"
+            ],
+            "properties": {
+                "permission_id": {
+                    "description": "Description: the id of the permission",
+                    "type": "string",
+                    "example": "18f7f9c2-b00a-42e4-a469-ea4c01c180dd"
+                }
+            }
+        },
+        "domain.View": {
+            "type": "object",
+            "required": [
+                "description",
+                "id",
+                "name"
+            ],
+            "properties": {
+                "created_at": {
+                    "description": "Description: the date of creation of the view",
+                    "type": "string",
+                    "example": "2024-01-31 08:10:00"
+                },
+                "description": {
+                    "description": "Description: the description of the view",
+                    "type": "string",
+                    "example": "activo fijo"
+                },
+                "id": {
+                    "description": "Description: the id of the view",
+                    "type": "string",
+                    "example": "18f7f9c2-b00a-42e4-a469-ea4c01c180dd"
+                },
+                "name": {
+                    "description": "Description: the name of the view",
+                    "type": "string",
+                    "example": "activo fijo"
+                }
+            }
+        },
+        "domain.ViewPermission": {
+            "type": "object",
+            "required": [
+                "created_by",
+                "id",
+                "permissions",
+                "view"
+            ],
+            "properties": {
+                "created_at": {
+                    "description": "Description: the date of creation of the view permission",
+                    "type": "string",
+                    "example": "2024-01-31 08:10:00"
+                },
+                "created_by": {
+                    "description": "Description: the description of the view permission",
+                    "type": "string",
+                    "example": "91fb86bd-da46-414b-97a1-fcdaa8cd35d1"
+                },
+                "id": {
+                    "description": "Description: id of the view permission",
+                    "type": "string",
+                    "example": "18f7f9c2-b00a-42e4-a469-ea4c01c180dd"
+                },
+                "permissions": {
+                    "$ref": "#/definitions/domain.Permission"
+                },
+                "view": {
+                    "$ref": "#/definitions/domain.View"
+                }
+            }
+        },
+        "errorDomain.LayerErr": {
+            "type": "string",
+            "enum": [
+                "domain",
+                "infrastructure",
+                "interface",
+                "use_case"
+            ],
+            "x-enum-varnames": [
+                "Domain",
+                "Infra",
+                "Interface",
+                "UseCase"
+            ]
+        },
+        "errorDomain.LevelErr": {
+            "type": "string",
+            "enum": [
+                "info",
+                "warning",
+                "error",
+                "fatal"
+            ],
+            "x-enum-varnames": [
+                "LevelInfo",
+                "LevelWarning",
+                "LevelError",
+                "LevelFatal"
+            ]
+        },
+        "errorDomain.SmartError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "error": {},
+                "function": {
+                    "type": "string"
+                },
+                "httpStatus": {
+                    "type": "integer"
+                },
+                "layer": {
+                    "$ref": "#/definitions/errorDomain.LayerErr"
+                },
+                "level": {
+                    "$ref": "#/definitions/errorDomain.LevelErr"
+                },
+                "messages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "raw": {
+                    "type": "string"
+                }
+            }
+        },
+        "httpResponse.IdResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "string",
+                    "example": "201"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "httpResponse.StatusResult": {
+            "type": "object",
+            "required": [
+                "status"
+            ],
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "example": 200
+                }
+            }
+        },
+        "rest.deleteViewPermissionsResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "boolean"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.viewPermissionsResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "pagination",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/domain.ViewPermission"
+                    }
+                },
+                "pagination": {
+                    "$ref": "#/definitions/domain.PaginationResults"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

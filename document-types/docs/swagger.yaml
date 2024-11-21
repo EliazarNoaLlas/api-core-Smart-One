@@ -1,0 +1,328 @@
+definitions:
+  domain.CreateDocumentTypeBody:
+    properties:
+      abbreviated_description:
+        description: 'Description: the abbreviation of the type of document'
+        example: DNI
+        type: string
+      description:
+        description: 'Description: the description of the type of document'
+        example: DOCUMENTO NACIONAL DE IDENTIDAD
+        type: string
+      enable:
+        description: 'Description: the status of the type of document'
+        example: 1
+        type: integer
+      number:
+        description: 'Description: the number of the type of document'
+        example: "01"
+        type: string
+    required:
+    - abbreviated_description
+    - description
+    - enable
+    - number
+    type: object
+  domain.DocumentType:
+    properties:
+      abbreviated_description:
+        description: 'Description: the abbreviation of the type of document'
+        example: DNI
+        type: string
+      created_at:
+        description: 'Description: the date of the type of document'
+        example: "2023-12-05 15:49:56"
+        type: string
+      description:
+        description: 'Description: the description of the type of document'
+        example: DOCUMENTO NACIONAL DE IDENTIDAD
+        type: string
+      enable:
+        description: 'Description: the status of the type of document'
+        example: 1
+        type: integer
+      id:
+        description: 'Description: the id of the type of document'
+        example: 00a58296-93b4-11ee-a040-0242ac11000e
+        type: string
+      number:
+        description: 'Description: the number of the type of document'
+        example: "01"
+        type: string
+    required:
+    - abbreviated_description
+    - description
+    - enable
+    - id
+    - number
+    type: object
+  domain.PaginationResults:
+    properties:
+      current_page:
+        type: integer
+      from:
+        type: integer
+      last_page:
+        type: integer
+      size_page:
+        type: integer
+      to:
+        type: integer
+      total:
+        type: integer
+    required:
+    - current_page
+    - last_page
+    - size_page
+    - total
+    type: object
+  domain.UpdateDocumentTypeBody:
+    properties:
+      abbreviated_description:
+        description: 'Description: the abbreviation of the type of document'
+        example: DNI
+        type: string
+      description:
+        description: 'Description: the description of the type of document'
+        example: DOCUMENTO NACIONAL DE IDENTIDAD
+        type: string
+      enable:
+        description: 'Description: the status of the type of document'
+        example: 1
+        type: integer
+      number:
+        description: 'Description: the number of the type of document'
+        example: "01"
+        type: string
+    required:
+    - abbreviated_description
+    - description
+    - enable
+    - number
+    type: object
+  errorDomain.LayerErr:
+    enum:
+    - domain
+    - infrastructure
+    - interface
+    - use_case
+    type: string
+    x-enum-varnames:
+    - Domain
+    - Infra
+    - Interface
+    - UseCase
+  errorDomain.LevelErr:
+    enum:
+    - info
+    - warning
+    - error
+    - fatal
+    type: string
+    x-enum-varnames:
+    - LevelInfo
+    - LevelWarning
+    - LevelError
+    - LevelFatal
+  errorDomain.SmartError:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      error: {}
+      function:
+        type: string
+      httpStatus:
+        type: integer
+      layer:
+        $ref: '#/definitions/errorDomain.LayerErr'
+      level:
+        $ref: '#/definitions/errorDomain.LevelErr'
+      messages:
+        items:
+          type: string
+        type: array
+      raw:
+        type: string
+    type: object
+  httpResponse.IdResult:
+    properties:
+      data:
+        example: "201"
+        type: string
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  httpResponse.StatusResult:
+    properties:
+      status:
+        example: 200
+        type: integer
+    required:
+    - status
+    type: object
+  rest.deleteDocumentTypesResult:
+    properties:
+      data:
+        type: boolean
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  rest.documentTypeResult:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.DocumentType'
+        type: array
+      pagination:
+        $ref: '#/definitions/domain.PaginationResults'
+      status:
+        type: integer
+    required:
+    - data
+    - pagination
+    - status
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/core/document_types/:
+    get:
+      consumes:
+      - application/json
+      description: get document types
+      parameters:
+      - description: the number of the document type
+        in: query
+        name: number
+        type: string
+      - description: the description of the document type
+        in: query
+        name: description
+        type: string
+      - description: the abbreviated description of the document type
+        in: query
+        name: abbreviated_description
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.documentTypeResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: get document types
+      tags:
+      - DocumentTypes
+  /api/v1/core/document_types/create_document_types/{documentTypeId}:
+    post:
+      consumes:
+      - application/json
+      description: Create a document type
+      parameters:
+      - description: document type id
+        in: path
+        name: documentTypeId
+        required: true
+        type: string
+      - description: Create document type body
+        in: body
+        name: createDocumentTypeBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateDocumentTypeBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.IdResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Create a document type
+      tags:
+      - DocumentTypes
+  /api/v1/core/document_types/delete_document_types/{documentTypeId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a document type
+      parameters:
+      - description: document type id
+        in: path
+        name: documentTypeId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.deleteDocumentTypesResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Delete a document type
+      tags:
+      - DocumentTypes
+  /api/v1/core/document_types/update_document_types/{documentTypeId}:
+    put:
+      consumes:
+      - application/json
+      description: Update a document type
+      parameters:
+      - description: document type id
+        in: path
+        name: documentTypeId
+        required: true
+        type: string
+      - description: Update document types body
+        in: body
+        name: updateDocumentTypeBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateDocumentTypeBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.StatusResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Update a document type
+      tags:
+      - DocumentTypes
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

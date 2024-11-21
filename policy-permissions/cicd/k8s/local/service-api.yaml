@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: policy-permissions-core-smartone-api-service
+  namespace: ${NAMESPACE}
+spec:
+  selector:
+    app: policy-permissions-core-smartone
+  ports:
+    - protocol: TCP
+      port: 9009
+      targetPort: 80
+  type: NodePort

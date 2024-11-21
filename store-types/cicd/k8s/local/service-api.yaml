@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: store-types-core-smartone-api-service
+  namespace: ${NAMESPACE}
+spec:
+  selector:
+    app: store-types-core-smartone
+  ports:
+    - protocol: TCP
+      port: 9004
+      targetPort: 80
+  type: NodePort

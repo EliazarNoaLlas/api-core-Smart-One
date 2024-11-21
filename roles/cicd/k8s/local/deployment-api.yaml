@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: roles-core-smartone
+  namespace: ${NAMESPACE}
+spec:
+  selector:
+    matchLabels:
+      app: roles-core-smartone
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: roles-core-smartone
+    spec:
+      containers:
+        - name: api
+          image: ${REGISTRY_URL}/${IMAGE}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: DB_DATABASE
+              value: "db_smartone"
+            - name: DB_HOST
+              value: ${DB_HOST}
+            - name: DB_PASSWORD
+              value: "U7fiLttFrIrdvVkk"
+            - name: DB_PORT
+              value: "3901"
+            - name: DB_USERNAME
+              value: "root"
+            - name: SERVER_PORT
+              value: "80"
+            - name: JWT_SECRET
+              value: "KzM4cSA1vrP4mbta"
+      imagePullSecrets:
+        - name: registryscp

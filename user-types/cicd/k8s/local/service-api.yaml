@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: user-types-core-smartone-api-service
+  namespace: ${NAMESPACE}
+spec:
+  selector:
+    app: user-types-core-smartone
+  ports:
+    - protocol: TCP
+      port: 9012
+      targetPort: 80
+  type: NodePort
+

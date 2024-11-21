@@ -1,0 +1,283 @@
+definitions:
+  domain.CreateStoreTypeBody:
+    properties:
+      abbreviation:
+        description: 'Description: the abbreviation of the store type'
+        example: Maq
+        type: string
+      description:
+        description: 'Description: the description of the store type'
+        example: Maquinaria
+        type: string
+    required:
+    - abbreviation
+    - description
+    type: object
+  domain.PaginationResults:
+    properties:
+      current_page:
+        type: integer
+      from:
+        type: integer
+      last_page:
+        type: integer
+      size_page:
+        type: integer
+      to:
+        type: integer
+      total:
+        type: integer
+    required:
+    - current_page
+    - last_page
+    - size_page
+    - total
+    type: object
+  domain.StoreType:
+    properties:
+      abbreviation:
+        description: 'Description: the abbreviation of the store type'
+        example: Maq
+        type: string
+      description:
+        description: 'Description: the description of the store type'
+        example: Maquinaria
+        type: string
+      id:
+        description: 'Description: the id of the store type'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+    required:
+    - abbreviation
+    - description
+    - id
+    type: object
+  domain.UpdateStoreTypeBody:
+    properties:
+      abbreviation:
+        description: 'Description: the abbreviation of the store type'
+        example: Maq
+        type: string
+      description:
+        description: 'Description: the description of the store type'
+        example: Maquinaria
+        type: string
+    required:
+    - abbreviation
+    - description
+    type: object
+  errorDomain.LayerErr:
+    enum:
+    - domain
+    - infrastructure
+    - interface
+    - use_case
+    type: string
+    x-enum-varnames:
+    - Domain
+    - Infra
+    - Interface
+    - UseCase
+  errorDomain.LevelErr:
+    enum:
+    - info
+    - warning
+    - error
+    - fatal
+    type: string
+    x-enum-varnames:
+    - LevelInfo
+    - LevelWarning
+    - LevelError
+    - LevelFatal
+  errorDomain.SmartError:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      error: {}
+      function:
+        type: string
+      httpStatus:
+        type: integer
+      layer:
+        $ref: '#/definitions/errorDomain.LayerErr'
+      level:
+        $ref: '#/definitions/errorDomain.LevelErr'
+      messages:
+        items:
+          type: string
+        type: array
+      raw:
+        type: string
+    type: object
+  httpResponse.IdResult:
+    properties:
+      data:
+        example: "201"
+        type: string
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  httpResponse.StatusResult:
+    properties:
+      status:
+        example: 200
+        type: integer
+    required:
+    - status
+    type: object
+  rest.deleteStoreTypeResult:
+    properties:
+      data:
+        type: boolean
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  rest.storeTypesResult:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.StoreType'
+        type: array
+      pagination:
+        $ref: '#/definitions/domain.PaginationResults'
+      status:
+        type: integer
+    required:
+    - data
+    - pagination
+    - status
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/core/store_types:
+    get:
+      consumes:
+      - application/json
+      description: Get store types
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: size page
+        in: query
+        name: size_page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.storeTypesResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Get store types
+      tags:
+      - Store Types
+    post:
+      consumes:
+      - application/json
+      description: Create store type
+      parameters:
+      - description: Create store type body
+        in: body
+        name: createStoreTypeBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateStoreTypeBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.IdResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Create store type
+      tags:
+      - Store Types
+  /api/v1/core/store_types/{storeTypeId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete store type
+      parameters:
+      - description: store type id
+        in: path
+        name: storeTypeId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.deleteStoreTypeResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Delete store type
+      tags:
+      - Store Types
+    put:
+      consumes:
+      - application/json
+      description: Update store type
+      parameters:
+      - description: store type id
+        in: path
+        name: storeTypeId
+        required: true
+        type: string
+      - description: Update store type body
+        in: body
+        name: updateStoreTypeBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateStoreTypeBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.StatusResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Update store type
+      tags:
+      - Store Types
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -1,0 +1,462 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/core/merchant_economic_activities/url/{merchantEconomicActivityId}": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create a merchant economic activities",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "MerchantEconomicActivities"
+                ],
+                "summary": "Create a merchant economic activities",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "the merchant economic activity id",
+                        "name": "merchantEconomicActivityId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Create user body",
+                        "name": "createMerchantEconomicActivityBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.CreateMerchantEconomicActivityBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/httpResponse.IdResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/core/merchant_economic_activities/{merchantEconomicActivityId}": {
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update a merchant economic activities",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "MerchantEconomicActivities"
+                ],
+                "summary": "Update a merchant economic activities",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "the merchant economic activity id",
+                        "name": "merchantEconomicActivityId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update user body",
+                        "name": "updateMerchantEconomicActivityBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.UpdateMerchantEconomicActivityBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/httpResponse.IdResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Delete a merchant economic activities",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "MerchantEconomicActivities"
+                ],
+                "summary": "Delete a merchant economic activities",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "merchant economic activity id",
+                        "name": "merchantEconomicActivityId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/interfaces.deleteMerchantEconomicActivityResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/core/merchant_economic_activities/{merchantId}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "get merchant economic activities",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "MerchantEconomicActivities"
+                ],
+                "summary": "get merchant economic activities",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "the merchant id",
+                        "name": "merchantId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/interfaces.merchantEconomicActivitiesResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "domain.CreateMerchantEconomicActivityBody": {
+            "type": "object",
+            "required": [
+                "economic_activity_id",
+                "merchant_id",
+                "sequence"
+            ],
+            "properties": {
+                "economic_activity_id": {
+                    "description": "Description: the id of the economic activities",
+                    "type": "string",
+                    "example": "70402269-92be-11ee-a040-0242ac11000e"
+                },
+                "merchant_id": {
+                    "description": "Description: the id of the merchants",
+                    "type": "string",
+                    "example": "70402269-92be-11ee-a040-0242ac11000e"
+                },
+                "sequence": {
+                    "description": "Description: the position of the merchant economic activities",
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "domain.EconomicActivityByMerchant": {
+            "type": "object",
+            "required": [
+                "cuui_id",
+                "id",
+                "status"
+            ],
+            "properties": {
+                "created_at": {
+                    "description": "Description: the date of create of the economic activities",
+                    "type": "string",
+                    "example": "2023-12-05 16:01:51"
+                },
+                "cuui_id": {
+                    "description": "Description: the cuui id of the economic activities",
+                    "type": "string",
+                    "example": "0111"
+                },
+                "description": {
+                    "description": "Description: the description of the economic activities",
+                    "type": "string",
+                    "example": "CULTIVO DE ARROZ"
+                },
+                "id": {
+                    "description": "Description: the id of the economic activities",
+                    "type": "string",
+                    "example": "70402269-92be-11ee-a040-0242ac11000e"
+                },
+                "status": {
+                    "description": "Description: the status of the economic activities",
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "domain.MerchantEconomicActivity": {
+            "type": "object",
+            "required": [
+                "id",
+                "sequence"
+            ],
+            "properties": {
+                "created_at": {
+                    "description": "Description: the date of create of the merchant economic activities",
+                    "type": "string",
+                    "example": "2023-12-05 16:01:51"
+                },
+                "economic_activity": {
+                    "$ref": "#/definitions/domain.EconomicActivityByMerchant"
+                },
+                "id": {
+                    "description": "Description: the id of the merchant economic activities",
+                    "type": "string",
+                    "example": "22d4b62a-9380-11ee-a040-0242ac11000e"
+                },
+                "sequence": {
+                    "description": "Description: the position of the merchant economic activities",
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "domain.PaginationResults": {
+            "type": "object",
+            "required": [
+                "current_page",
+                "last_page",
+                "size_page",
+                "total"
+            ],
+            "properties": {
+                "current_page": {
+                    "type": "integer"
+                },
+                "from": {
+                    "type": "integer"
+                },
+                "last_page": {
+                    "type": "integer"
+                },
+                "size_page": {
+                    "type": "integer"
+                },
+                "to": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "domain.UpdateMerchantEconomicActivityBody": {
+            "type": "object",
+            "required": [
+                "economic_activity_id",
+                "merchant_id",
+                "sequence"
+            ],
+            "properties": {
+                "economic_activity_id": {
+                    "description": "Description: the id of the economic activities",
+                    "type": "string",
+                    "example": "70402269-92be-11ee-a040-0242ac11000e"
+                },
+                "merchant_id": {
+                    "description": "Description: the id of the merchants",
+                    "type": "string",
+                    "example": "70402269-92be-11ee-a040-0242ac11000e"
+                },
+                "sequence": {
+                    "description": "Description: the position of the merchant economic activities",
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "errorDomain.LayerErr": {
+            "type": "string",
+            "enum": [
+                "domain",
+                "infrastructure",
+                "interface",
+                "use_case"
+            ],
+            "x-enum-varnames": [
+                "Domain",
+                "Infra",
+                "Interface",
+                "UseCase"
+            ]
+        },
+        "errorDomain.LevelErr": {
+            "type": "string",
+            "enum": [
+                "info",
+                "warning",
+                "error",
+                "fatal"
+            ],
+            "x-enum-varnames": [
+                "LevelInfo",
+                "LevelWarning",
+                "LevelError",
+                "LevelFatal"
+            ]
+        },
+        "errorDomain.SmartError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "error": {},
+                "function": {
+                    "type": "string"
+                },
+                "httpStatus": {
+                    "type": "integer"
+                },
+                "layer": {
+                    "$ref": "#/definitions/errorDomain.LayerErr"
+                },
+                "level": {
+                    "$ref": "#/definitions/errorDomain.LevelErr"
+                },
+                "messages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "raw": {
+                    "type": "string"
+                }
+            }
+        },
+        "httpResponse.IdResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "string",
+                    "example": "201"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "interfaces.deleteMerchantEconomicActivityResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "boolean"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "interfaces.merchantEconomicActivitiesResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "pagination",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/domain.MerchantEconomicActivity"
+                    }
+                },
+                "pagination": {
+                    "$ref": "#/definitions/domain.PaginationResults"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

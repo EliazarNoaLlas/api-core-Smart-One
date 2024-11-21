@@ -1,0 +1,638 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/core/policies": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "get policies",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Policies"
+                ],
+                "summary": "get policies",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "size page",
+                        "name": "size_page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "module id",
+                        "name": "module_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "merchant id",
+                        "name": "merchant_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "store id",
+                        "name": "store_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/rest.policiesResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create a policy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Policies"
+                ],
+                "summary": "Create a policy",
+                "parameters": [
+                    {
+                        "description": "Create policy body",
+                        "name": "createPolicyBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.CreatePolicyBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/httpResponse.IdResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/core/policies/{policyId}": {
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update a policy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Policies"
+                ],
+                "summary": "Update a policy",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "policy id",
+                        "name": "policyId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update policy body",
+                        "name": "updatePolicyBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.UpdatePolicyBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/httpResponse.StatusResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Delete a policy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Policies"
+                ],
+                "summary": "Delete a policy",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "policy id",
+                        "name": "policyId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/rest.deletePoliciesResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "domain.CreatePolicyBody": {
+            "type": "object",
+            "required": [
+                "description",
+                "level",
+                "module_id",
+                "name"
+            ],
+            "properties": {
+                "description": {
+                    "description": "Description: the description of the created policy",
+                    "type": "string",
+                    "example": "Politica para accesos a logistica requerimientos en todo el conglomerado"
+                },
+                "enable": {
+                    "description": "Description: enable of the created policy",
+                    "type": "boolean",
+                    "example": true
+                },
+                "level": {
+                    "description": "Description: the level of the created policy",
+                    "type": "string",
+                    "example": "system"
+                },
+                "merchant_id": {
+                    "description": "Description: the merchant_id of the created policy",
+                    "type": "string",
+                    "example": "739bbbc9-7e93-11ee-89fd-0242ac110019"
+                },
+                "module_id": {
+                    "description": "Description: the module_id of the created policy",
+                    "type": "string",
+                    "example": "739bbbc9-7e93-11ee-89fd-0242ac110018"
+                },
+                "name": {
+                    "description": "Description: the name of the created policy",
+                    "type": "string",
+                    "example": "LOGISTICA_REQUERIMIENTOS_CONGLOMERADO"
+                },
+                "store_id": {
+                    "description": "Description: the store_id of the created policy",
+                    "type": "string",
+                    "example": "739bbbc9-7e93-11ee-89fd-0242ac110020"
+                }
+            }
+        },
+        "domain.MerchantByPolicy": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "description": "Description: the description of the merchant",
+                    "type": "string",
+                    "example": "Proveedor de servicios de mantenimiento"
+                },
+                "document": {
+                    "description": "Description: the document of the merchant",
+                    "type": "string",
+                    "example": "123456789"
+                },
+                "id": {
+                    "description": "Description: the id of the merchant",
+                    "type": "string",
+                    "example": "739bbbc9-7e93-11ee-89fd-0242ac110016"
+                },
+                "name": {
+                    "description": "Description: the name of the merchant",
+                    "type": "string",
+                    "example": "Odin Corp"
+                }
+            }
+        },
+        "domain.ModuleByPolicy": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "Description: the code of the module",
+                    "type": "string",
+                    "example": "logistic"
+                },
+                "description": {
+                    "description": "Description: the description of the module",
+                    "type": "string",
+                    "example": "Modulo de logística"
+                },
+                "id": {
+                    "description": "Description: the id of the module",
+                    "type": "string",
+                    "example": "739bbbc9-7e93-11ee-89fd-0242ac110018"
+                },
+                "name": {
+                    "description": "Description: the name of the module",
+                    "type": "string",
+                    "example": "Logistic"
+                }
+            }
+        },
+        "domain.PaginationResults": {
+            "type": "object",
+            "required": [
+                "current_page",
+                "last_page",
+                "size_page",
+                "total"
+            ],
+            "properties": {
+                "current_page": {
+                    "type": "integer"
+                },
+                "from": {
+                    "type": "integer"
+                },
+                "last_page": {
+                    "type": "integer"
+                },
+                "size_page": {
+                    "type": "integer"
+                },
+                "to": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "domain.PermissionByPolicy": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "Description: the code of the permission",
+                    "type": "string",
+                    "example": "REQUIREMENTS_READ"
+                },
+                "description": {
+                    "description": "Description: the description of the permission",
+                    "type": "string",
+                    "example": "Permiso para listar requerimientos"
+                },
+                "id": {
+                    "description": "Description: the id of the permission",
+                    "type": "string",
+                    "example": "739bbbc9-7e93-11ee-89fd-0242ac110010"
+                },
+                "name": {
+                    "description": "Description: the name of the permission",
+                    "type": "string",
+                    "example": "Listar requerimientos"
+                },
+                "policy_permission": {
+                    "$ref": "#/definitions/domain.PolicyPermissionByPolicy"
+                }
+            }
+        },
+        "domain.Policy": {
+            "type": "object",
+            "required": [
+                "description",
+                "enable",
+                "id",
+                "level",
+                "name"
+            ],
+            "properties": {
+                "created_at": {
+                    "description": "Description: the created_at of the policy",
+                    "type": "string",
+                    "example": "2023-11-10 08:10:00"
+                },
+                "description": {
+                    "description": "Description: the description of the policy",
+                    "type": "string",
+                    "example": "Politica para accesos a logistica requerimientos en todo el conglomerado"
+                },
+                "enable": {
+                    "description": "Description: enable of the policy",
+                    "type": "boolean",
+                    "example": true
+                },
+                "id": {
+                    "description": "Description: the id of the policy",
+                    "type": "string",
+                    "example": "739bbbc9-7e93-11ee-89fd-0242ac110016"
+                },
+                "level": {
+                    "description": "Description: the level of the policy",
+                    "type": "string",
+                    "example": "system"
+                },
+                "merchant": {
+                    "$ref": "#/definitions/domain.MerchantByPolicy"
+                },
+                "module": {
+                    "$ref": "#/definitions/domain.ModuleByPolicy"
+                },
+                "name": {
+                    "description": "Description: the name of the policy",
+                    "type": "string",
+                    "example": "LOGISTICA_REQUERIMIENTOS_CONGLOMERADO"
+                },
+                "permissions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/domain.PermissionByPolicy"
+                    }
+                },
+                "store": {
+                    "$ref": "#/definitions/domain.StoreByPolicy"
+                }
+            }
+        },
+        "domain.PolicyPermissionByPolicy": {
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "description": "Description: enable of the policy permission",
+                    "type": "boolean",
+                    "example": true
+                },
+                "id": {
+                    "description": "Description: the id of the policy permission",
+                    "type": "string",
+                    "example": "739bbbc9-7e93-11ee-89fd-0242ac110010"
+                }
+            }
+        },
+        "domain.StoreByPolicy": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "Description: the id of the store",
+                    "type": "string",
+                    "example": "739bbbc9-7e93-11ee-89fd-0242ac110016"
+                },
+                "name": {
+                    "description": "Description: the name of the store",
+                    "type": "string",
+                    "example": "Obra av. 28 julio"
+                },
+                "shortname": {
+                    "description": "Description: the shortname of the store",
+                    "type": "string",
+                    "example": "Obra 28"
+                }
+            }
+        },
+        "domain.UpdatePolicyBody": {
+            "type": "object",
+            "required": [
+                "description",
+                "level",
+                "module_id",
+                "name"
+            ],
+            "properties": {
+                "description": {
+                    "description": "Description: the description of the update policy",
+                    "type": "string",
+                    "example": "Politica para accesos a logistica requerimientos en todo el conglomerado"
+                },
+                "enable": {
+                    "description": "Description: enable of the update policy",
+                    "type": "boolean",
+                    "example": true
+                },
+                "level": {
+                    "description": "Description: the level of the update policy",
+                    "type": "string",
+                    "example": "system"
+                },
+                "merchant_id": {
+                    "description": "Description: the merchant_id of the update policy",
+                    "type": "string",
+                    "example": "739bbbc9-7e93-11ee-89fd-0242ac110019"
+                },
+                "module_id": {
+                    "description": "Description: the module_id of the update policy",
+                    "type": "string",
+                    "example": "739bbbc9-7e93-11ee-89fd-0242ac110018"
+                },
+                "name": {
+                    "description": "Description: the name of the update policy",
+                    "type": "string",
+                    "example": "LOGISTICA_REQUERIMIENTOS_CONGLOMERADO"
+                },
+                "store_id": {
+                    "description": "Description: the store_id of the update policy",
+                    "type": "string",
+                    "example": "739bbbc9-7e93-11ee-89fd-0242ac110020"
+                }
+            }
+        },
+        "errorDomain.LayerErr": {
+            "type": "string",
+            "enum": [
+                "domain",
+                "infrastructure",
+                "interface",
+                "use_case"
+            ],
+            "x-enum-varnames": [
+                "Domain",
+                "Infra",
+                "Interface",
+                "UseCase"
+            ]
+        },
+        "errorDomain.LevelErr": {
+            "type": "string",
+            "enum": [
+                "info",
+                "warning",
+                "error",
+                "fatal"
+            ],
+            "x-enum-varnames": [
+                "LevelInfo",
+                "LevelWarning",
+                "LevelError",
+                "LevelFatal"
+            ]
+        },
+        "errorDomain.SmartError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "error": {},
+                "function": {
+                    "type": "string"
+                },
+                "httpStatus": {
+                    "type": "integer"
+                },
+                "layer": {
+                    "$ref": "#/definitions/errorDomain.LayerErr"
+                },
+                "level": {
+                    "$ref": "#/definitions/errorDomain.LevelErr"
+                },
+                "messages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "raw": {
+                    "type": "string"
+                }
+            }
+        },
+        "httpResponse.IdResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "string",
+                    "example": "201"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "httpResponse.StatusResult": {
+            "type": "object",
+            "required": [
+                "status"
+            ],
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "example": 200
+                }
+            }
+        },
+        "rest.deletePoliciesResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "boolean"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.policiesResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "pagination",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/domain.Policy"
+                    }
+                },
+                "pagination": {
+                    "$ref": "#/definitions/domain.PaginationResults"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

@@ -1,0 +1,316 @@
+definitions:
+  domain.CreateMerchantEconomicActivityBody:
+    properties:
+      economic_activity_id:
+        description: 'Description: the id of the economic activities'
+        example: 70402269-92be-11ee-a040-0242ac11000e
+        type: string
+      merchant_id:
+        description: 'Description: the id of the merchants'
+        example: 70402269-92be-11ee-a040-0242ac11000e
+        type: string
+      sequence:
+        description: 'Description: the position of the merchant economic activities'
+        example: 1
+        type: integer
+    required:
+    - economic_activity_id
+    - merchant_id
+    - sequence
+    type: object
+  domain.EconomicActivityByMerchant:
+    properties:
+      created_at:
+        description: 'Description: the date of create of the economic activities'
+        example: "2023-12-05 16:01:51"
+        type: string
+      cuui_id:
+        description: 'Description: the cuui id of the economic activities'
+        example: "0111"
+        type: string
+      description:
+        description: 'Description: the description of the economic activities'
+        example: CULTIVO DE ARROZ
+        type: string
+      id:
+        description: 'Description: the id of the economic activities'
+        example: 70402269-92be-11ee-a040-0242ac11000e
+        type: string
+      status:
+        description: 'Description: the status of the economic activities'
+        example: 1
+        type: integer
+    required:
+    - cuui_id
+    - id
+    - status
+    type: object
+  domain.MerchantEconomicActivity:
+    properties:
+      created_at:
+        description: 'Description: the date of create of the merchant economic activities'
+        example: "2023-12-05 16:01:51"
+        type: string
+      economic_activity:
+        $ref: '#/definitions/domain.EconomicActivityByMerchant'
+      id:
+        description: 'Description: the id of the merchant economic activities'
+        example: 22d4b62a-9380-11ee-a040-0242ac11000e
+        type: string
+      sequence:
+        description: 'Description: the position of the merchant economic activities'
+        example: 1
+        type: integer
+    required:
+    - id
+    - sequence
+    type: object
+  domain.PaginationResults:
+    properties:
+      current_page:
+        type: integer
+      from:
+        type: integer
+      last_page:
+        type: integer
+      size_page:
+        type: integer
+      to:
+        type: integer
+      total:
+        type: integer
+    required:
+    - current_page
+    - last_page
+    - size_page
+    - total
+    type: object
+  domain.UpdateMerchantEconomicActivityBody:
+    properties:
+      economic_activity_id:
+        description: 'Description: the id of the economic activities'
+        example: 70402269-92be-11ee-a040-0242ac11000e
+        type: string
+      merchant_id:
+        description: 'Description: the id of the merchants'
+        example: 70402269-92be-11ee-a040-0242ac11000e
+        type: string
+      sequence:
+        description: 'Description: the position of the merchant economic activities'
+        example: 1
+        type: integer
+    required:
+    - economic_activity_id
+    - merchant_id
+    - sequence
+    type: object
+  errorDomain.LayerErr:
+    enum:
+    - domain
+    - infrastructure
+    - interface
+    - use_case
+    type: string
+    x-enum-varnames:
+    - Domain
+    - Infra
+    - Interface
+    - UseCase
+  errorDomain.LevelErr:
+    enum:
+    - info
+    - warning
+    - error
+    - fatal
+    type: string
+    x-enum-varnames:
+    - LevelInfo
+    - LevelWarning
+    - LevelError
+    - LevelFatal
+  errorDomain.SmartError:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      error: {}
+      function:
+        type: string
+      httpStatus:
+        type: integer
+      layer:
+        $ref: '#/definitions/errorDomain.LayerErr'
+      level:
+        $ref: '#/definitions/errorDomain.LevelErr'
+      messages:
+        items:
+          type: string
+        type: array
+      raw:
+        type: string
+    type: object
+  httpResponse.IdResult:
+    properties:
+      data:
+        example: "201"
+        type: string
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  interfaces.deleteMerchantEconomicActivityResult:
+    properties:
+      data:
+        type: boolean
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  interfaces.merchantEconomicActivitiesResult:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.MerchantEconomicActivity'
+        type: array
+      pagination:
+        $ref: '#/definitions/domain.PaginationResults'
+      status:
+        type: integer
+    required:
+    - data
+    - pagination
+    - status
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/core/merchant_economic_activities/{merchantEconomicActivityId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a merchant economic activities
+      parameters:
+      - description: merchant economic activity id
+        in: path
+        name: merchantEconomicActivityId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/interfaces.deleteMerchantEconomicActivityResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Delete a merchant economic activities
+      tags:
+      - MerchantEconomicActivities
+    put:
+      consumes:
+      - application/json
+      description: Update a merchant economic activities
+      parameters:
+      - description: the merchant economic activity id
+        in: path
+        name: merchantEconomicActivityId
+        required: true
+        type: string
+      - description: Update user body
+        in: body
+        name: updateMerchantEconomicActivityBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateMerchantEconomicActivityBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.IdResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Update a merchant economic activities
+      tags:
+      - MerchantEconomicActivities
+  /api/v1/core/merchant_economic_activities/{merchantId}:
+    get:
+      consumes:
+      - application/json
+      description: get merchant economic activities
+      parameters:
+      - description: the merchant id
+        in: path
+        name: merchantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/interfaces.merchantEconomicActivitiesResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: get merchant economic activities
+      tags:
+      - MerchantEconomicActivities
+  /api/v1/core/merchant_economic_activities/url/{merchantEconomicActivityId}:
+    post:
+      consumes:
+      - application/json
+      description: Create a merchant economic activities
+      parameters:
+      - description: the merchant economic activity id
+        in: path
+        name: merchantEconomicActivityId
+        required: true
+        type: string
+      - description: Create user body
+        in: body
+        name: createMerchantEconomicActivityBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateMerchantEconomicActivityBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.IdResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Create a merchant economic activities
+      tags:
+      - MerchantEconomicActivities
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

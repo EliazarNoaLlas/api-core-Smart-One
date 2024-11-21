@@ -1,0 +1,444 @@
+definitions:
+  domain.CreateRolePolicyBody:
+    properties:
+      enable:
+        description: 'Description: enable of the created role policies'
+        example: true
+        type: boolean
+      policy_id:
+        description: 'Description: the policy_id of the created role policies'
+        example: 739bbbc9-7e93-11ee-89fd-042hs5278420
+        type: string
+    required:
+    - enable
+    - policy_id
+    type: object
+  domain.PaginationResults:
+    properties:
+      current_page:
+        type: integer
+      from:
+        type: integer
+      last_page:
+        type: integer
+      size_page:
+        type: integer
+      to:
+        type: integer
+      total:
+        type: integer
+    required:
+    - current_page
+    - last_page
+    - size_page
+    - total
+    type: object
+  domain.PolicyByRolePolicy:
+    properties:
+      created_at:
+        description: 'Description: the created_at of the role policies'
+        example: "2023-11-10 08:10:00"
+        type: string
+      description:
+        description: 'Description: the description of the role policies'
+        example: Politica para accesos a logistica requerimientos en todo el conglomerado
+        type: string
+      enable:
+        description: 'Description: enable of the role policies'
+        example: true
+        type: boolean
+      id:
+        description: 'Description: the id of the role policies'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+      level:
+        description: 'Description: the level of the role policies'
+        example: system
+        type: string
+      name:
+        description: 'Description: the name of the role policies'
+        example: LOGISTICA_REQUERIMIENTOS_CONGLOMERADO
+        type: string
+    required:
+    - description
+    - enable
+    - id
+    - level
+    - name
+    type: object
+  domain.RolePolicy:
+    properties:
+      created_at:
+        description: 'Description: the created_at of the role policies'
+        example: "2023-11-10 08:10:00"
+        type: string
+      enable:
+        description: 'Description: enable of the role policies'
+        example: true
+        type: boolean
+      id:
+        description: 'Description: the id of the role policies'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110017
+        type: string
+      policy:
+        $ref: '#/definitions/domain.PolicyByRolePolicy'
+    required:
+    - enable
+    - id
+    - policy
+    type: object
+  domain.UpdateRolePolicyBody:
+    properties:
+      enable:
+        description: 'Description: enable of the update role policies'
+        example: true
+        type: boolean
+      policy_id:
+        description: 'Description: the policy_id of the update role policies'
+        example: 739bbbc9-7e93-11ee-89fd-042hs5278420
+        type: string
+    required:
+    - enable
+    - policy_id
+    type: object
+  errorDomain.LayerErr:
+    enum:
+    - domain
+    - infrastructure
+    - interface
+    - use_case
+    type: string
+    x-enum-varnames:
+    - Domain
+    - Infra
+    - Interface
+    - UseCase
+  errorDomain.LevelErr:
+    enum:
+    - info
+    - warning
+    - error
+    - fatal
+    type: string
+    x-enum-varnames:
+    - LevelInfo
+    - LevelWarning
+    - LevelError
+    - LevelFatal
+  errorDomain.SmartError:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      error: {}
+      function:
+        type: string
+      httpStatus:
+        type: integer
+      layer:
+        $ref: '#/definitions/errorDomain.LayerErr'
+      level:
+        $ref: '#/definitions/errorDomain.LevelErr'
+      messages:
+        items:
+          type: string
+        type: array
+      raw:
+        type: string
+    type: object
+  httpResponse.IdResult:
+    properties:
+      data:
+        example: "201"
+        type: string
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  httpResponse.IdsResult:
+    properties:
+      data:
+        example:
+        - "201"
+        items:
+          type: string
+        type: array
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  httpResponse.StatusResult:
+    properties:
+      status:
+        example: 200
+        type: integer
+    required:
+    - status
+    type: object
+  rest.createMultipleRolePoliciesValidate:
+    properties:
+      rolePolicies:
+        items:
+          $ref: '#/definitions/rest.createMultipleRolePolicyValidate'
+        type: array
+    type: object
+  rest.createMultipleRolePolicyValidate:
+    properties:
+      enable:
+        example: true
+        type: boolean
+      id:
+        example: 739bbbc9-7e93-11ee-89fd-0442ac210932
+        type: string
+      policy_id:
+        example: 739bbbc9-7e93-11ee-89fd-0442ac210931
+        type: string
+    required:
+    - id
+    - policy_id
+    type: object
+  rest.deleteMultipleRolePoliciesValidate:
+    properties:
+      role_policy_ids:
+        example:
+        - 739bbbc9-7e93-11ee-89fd-0442ac210931
+        items:
+          type: string
+        type: array
+    required:
+    - role_policy_ids
+    type: object
+  rest.deleteRolePoliciesResult:
+    properties:
+      data:
+        type: boolean
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  rest.rolePoliciesResult:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.RolePolicy'
+        type: array
+      pagination:
+        $ref: '#/definitions/domain.PaginationResults'
+      status:
+        type: integer
+    required:
+    - data
+    - pagination
+    - status
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/core/roles/{roleId}/policies:
+    get:
+      consumes:
+      - application/json
+      description: get policies by role
+      parameters:
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: size page
+        in: query
+        name: size_page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.rolePoliciesResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: get policies by role
+      tags:
+      - Role Policy
+    post:
+      consumes:
+      - application/json
+      description: Create role policy
+      parameters:
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      - description: Create role policy body
+        in: body
+        name: createRolePolicyBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateRolePolicyBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.IdResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Create role policy
+      tags:
+      - Role Policy
+  /api/v1/core/roles/{roleId}/policies/{rolePolicyId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete role policy
+      parameters:
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      - description: role policy id
+        in: path
+        name: rolePolicyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.deleteRolePoliciesResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Delete role policy
+      tags:
+      - Role Policy
+    put:
+      consumes:
+      - application/json
+      description: Update role policy
+      parameters:
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      - description: role policy id
+        in: path
+        name: rolePolicyId
+        required: true
+        type: string
+      - description: Update role policy body
+        in: body
+        name: updateRolePolicyBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateRolePolicyBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.StatusResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Update role policy
+      tags:
+      - Role Policy
+  /api/v1/core/roles/{roleId}/policies/batch:
+    delete:
+      consumes:
+      - application/json
+      description: Delete multiple role policies
+      parameters:
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.deleteMultipleRolePoliciesValidate'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Delete multiple role policies
+      tags:
+      - Role Policy
+    post:
+      consumes:
+      - application/json
+      description: Create multiple role policies
+      parameters:
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      - description: Create multiple role policy body
+        in: body
+        name: createRolePolicyBody
+        required: true
+        schema:
+          $ref: '#/definitions/rest.createMultipleRolePoliciesValidate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.IdsResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Create multiple role policies
+      tags:
+      - Role Policy
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -1,0 +1,144 @@
+definitions:
+  domain.EconomicActivity:
+    properties:
+      created_at:
+        example: "2023-12-04 16:01:51"
+        type: string
+      cuui_id:
+        example: "0111"
+        type: string
+      description:
+        example: CULTIVO DE ARROZ
+        type: string
+      id:
+        example: 70402269-92be-11ee-a040-0242ac11000e
+        type: string
+      status:
+        example: 1
+        type: integer
+    required:
+    - created_at
+    - cuui_id
+    - id
+    - status
+    type: object
+  domain.PaginationResults:
+    properties:
+      current_page:
+        type: integer
+      from:
+        type: integer
+      last_page:
+        type: integer
+      size_page:
+        type: integer
+      to:
+        type: integer
+      total:
+        type: integer
+    required:
+    - current_page
+    - last_page
+    - size_page
+    - total
+    type: object
+  errorDomain.LayerErr:
+    enum:
+    - domain
+    - infrastructure
+    - interface
+    - use_case
+    type: string
+    x-enum-varnames:
+    - Domain
+    - Infra
+    - Interface
+    - UseCase
+  errorDomain.LevelErr:
+    enum:
+    - info
+    - warning
+    - error
+    - fatal
+    type: string
+    x-enum-varnames:
+    - LevelInfo
+    - LevelWarning
+    - LevelError
+    - LevelFatal
+  errorDomain.SmartError:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      error: {}
+      function:
+        type: string
+      httpStatus:
+        type: integer
+      layer:
+        $ref: '#/definitions/errorDomain.LayerErr'
+      level:
+        $ref: '#/definitions/errorDomain.LevelErr'
+      messages:
+        items:
+          type: string
+        type: array
+      raw:
+        type: string
+    type: object
+  rest.economicActivitiesResult:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.EconomicActivity'
+        type: array
+      pagination:
+        $ref: '#/definitions/domain.PaginationResults'
+      status:
+        type: integer
+    required:
+    - data
+    - pagination
+    - status
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/core/economic_activities/:
+    get:
+      consumes:
+      - application/json
+      description: get economic activities
+      parameters:
+      - description: the cuui id
+        in: query
+        name: cuui_id
+        type: string
+      - description: the description of the economic activities
+        in: query
+        name: description
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.economicActivitiesResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: get economic activities
+      tags:
+      - EconomicActivities
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

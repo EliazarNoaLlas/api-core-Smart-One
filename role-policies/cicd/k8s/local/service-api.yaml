@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: role-policies-core-smartone-api-service
+  namespace: ${NAMESPACE}
+spec:
+  selector:
+    app: role-policies-core-smartone
+  ports:
+    - protocol: TCP
+      port: 9011
+      targetPort: 80
+  type: NodePort

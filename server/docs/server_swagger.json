@@ -1,0 +1,148 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/core/server/datetime": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "get server datetime",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Server"
+                ],
+                "summary": "get datetime",
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/rest.ServerDateTimeResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "domain.ServerDate": {
+            "type": "object",
+            "required": [
+                "date_time",
+                "time_zone"
+            ],
+            "properties": {
+                "date_time": {
+                    "description": "Description: Date time",
+                    "type": "string",
+                    "example": "2023-10-10T00:00:00Z"
+                },
+                "time_zone": {
+                    "description": "Description: Time zone",
+                    "type": "string",
+                    "example": "UTC"
+                }
+            }
+        },
+        "errorDomain.LayerErr": {
+            "type": "string",
+            "enum": [
+                "domain",
+                "infrastructure",
+                "interface",
+                "use_case"
+            ],
+            "x-enum-varnames": [
+                "Domain",
+                "Infra",
+                "Interface",
+                "UseCase"
+            ]
+        },
+        "errorDomain.LevelErr": {
+            "type": "string",
+            "enum": [
+                "info",
+                "warning",
+                "error",
+                "fatal"
+            ],
+            "x-enum-varnames": [
+                "LevelInfo",
+                "LevelWarning",
+                "LevelError",
+                "LevelFatal"
+            ]
+        },
+        "errorDomain.SmartError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "error": {},
+                "function": {
+                    "type": "string"
+                },
+                "httpStatus": {
+                    "type": "integer"
+                },
+                "layer": {
+                    "$ref": "#/definitions/errorDomain.LayerErr"
+                },
+                "level": {
+                    "$ref": "#/definitions/errorDomain.LevelErr"
+                },
+                "messages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "raw": {
+                    "type": "string"
+                }
+            }
+        },
+        "rest.ServerDateTimeResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/domain.ServerDate"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

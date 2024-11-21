@@ -1,0 +1,404 @@
+definitions:
+  domain.CreatePolicyPermissionBody:
+    properties:
+      enable:
+        description: 'Description: enable of the created policy permission'
+        example: true
+        type: boolean
+      permission_id:
+        description: 'Description: the permission_id of the created policy permission'
+        example: 739bbbc9-7e93-11ee-89fd-042hs5278420
+        type: string
+    required:
+    - enable
+    - permission_id
+    type: object
+  domain.DeleteMultiplePolicyPermissionBody:
+    properties:
+      policy_permission_ids:
+        description: 'Description: the permission_id of the created policy permission'
+        example:
+        - 739bbbc9-7e93-11ee-89fd-042hs5278420
+        items:
+          type: string
+        type: array
+    required:
+    - policy_permission_ids
+    type: object
+  domain.PaginationResults:
+    properties:
+      current_page:
+        type: integer
+      from:
+        type: integer
+      last_page:
+        type: integer
+      size_page:
+        type: integer
+      to:
+        type: integer
+      total:
+        type: integer
+    required:
+    - current_page
+    - last_page
+    - size_page
+    - total
+    type: object
+  domain.Permission:
+    properties:
+      code:
+        description: 'Description: tho code of the permission'
+        example: REQUIREMENTS_READ
+        type: string
+      created_at:
+        description: 'Description: the date of created of the permission'
+        example: "2023-12-07 17:13:57"
+        type: string
+      description:
+        description: 'Description: the description of the permission'
+        example: Permiso para listar requerimientos
+        type: string
+      id:
+        description: 'Description: the id of the permission of the permission'
+        example: 84305ba9-83d2-11ee-89fd-0242ac110016
+        type: string
+      name:
+        description: 'Description: the name of the permission'
+        example: Aprobar limpiezas
+        type: string
+    required:
+    - code
+    - description
+    - id
+    - name
+    type: object
+  domain.PolicyPermission:
+    properties:
+      created_at:
+        description: 'Description: date of create of the permission policy'
+        example: "2023-11-30 15:30:49"
+        type: string
+      enable:
+        description: 'Description: the status of the permission policy'
+        example: 1
+        type: integer
+      id:
+        description: 'Description: the id of the permission policy'
+        example: 22597e1d-6463-4bf9-ba51-0f8a3967321f
+        type: string
+      permission:
+        $ref: '#/definitions/domain.Permission'
+    required:
+    - enable
+    - id
+    - permission
+    type: object
+  errorDomain.LayerErr:
+    enum:
+    - domain
+    - infrastructure
+    - interface
+    - use_case
+    type: string
+    x-enum-varnames:
+    - Domain
+    - Infra
+    - Interface
+    - UseCase
+  errorDomain.LevelErr:
+    enum:
+    - info
+    - warning
+    - error
+    - fatal
+    type: string
+    x-enum-varnames:
+    - LevelInfo
+    - LevelWarning
+    - LevelError
+    - LevelFatal
+  errorDomain.SmartError:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      error: {}
+      function:
+        type: string
+      httpStatus:
+        type: integer
+      layer:
+        $ref: '#/definitions/errorDomain.LayerErr'
+      level:
+        $ref: '#/definitions/errorDomain.LevelErr'
+      messages:
+        items:
+          type: string
+        type: array
+      raw:
+        type: string
+    type: object
+  httpResponse.IdResult:
+    properties:
+      data:
+        example: "201"
+        type: string
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  httpResponse.IdsResult:
+    properties:
+      data:
+        example:
+        - "201"
+        items:
+          type: string
+        type: array
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  httpResponse.StatusResult:
+    properties:
+      status:
+        example: 200
+        type: integer
+    required:
+    - status
+    type: object
+  rest.deletePolicyPermissionsResult:
+    properties:
+      data:
+        type: boolean
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  rest.policyPermissionsResult:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.PolicyPermission'
+        type: array
+      pagination:
+        $ref: '#/definitions/domain.PaginationResults'
+      status:
+        type: integer
+    required:
+    - data
+    - pagination
+    - status
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/core/policies/{policyId}/permissions:
+    get:
+      consumes:
+      - application/json
+      description: get policy permissions
+      parameters:
+      - description: policy id
+        in: path
+        name: policyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.policyPermissionsResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: get policy permissions
+      tags:
+      - PolicyPermissions
+    post:
+      consumes:
+      - application/json
+      description: Create a Policy permission
+      parameters:
+      - description: policy id
+        in: path
+        name: policyId
+        required: true
+        type: string
+      - description: Create  body
+        in: body
+        name: createPolicyPermissionBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreatePolicyPermissionBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.IdResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Create a Policy permission
+      tags:
+      - PolicyPermissions
+  /api/v1/core/policies/{policyId}/permissions/{policyPermissionId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a Policy permission
+      parameters:
+      - description: policy id
+        in: path
+        name: policyId
+        required: true
+        type: string
+      - description: policy permission id
+        in: path
+        name: policyPermissionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.deletePolicyPermissionsResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Delete a Policy permission
+      tags:
+      - PolicyPermissions
+    put:
+      consumes:
+      - application/json
+      description: Update a Policy permission
+      parameters:
+      - description: policy id
+        in: path
+        name: policyId
+        required: true
+        type: string
+      - description: policy permission id
+        in: path
+        name: policyPermissionId
+        required: true
+        type: string
+      - description: Update policy permission
+        in: body
+        name: policyPermissionBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreatePolicyPermissionBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.StatusResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Update a Policy permission
+      tags:
+      - PolicyPermissions
+  /api/v1/core/policies/{policyId}/permissions/batch:
+    delete:
+      consumes:
+      - application/json
+      description: Delete multiple policy permissions
+      parameters:
+      - description: policy id
+        in: path
+        name: policyId
+        required: true
+        type: string
+      - description: Delete body
+        in: body
+        name: deletePolicyPermissionsMultipleBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.DeleteMultiplePolicyPermissionBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.deletePolicyPermissionsResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Delete multiple policy permissions
+      tags:
+      - PolicyPermissions
+    post:
+      consumes:
+      - application/json
+      description: Create multiple policy permissions
+      parameters:
+      - description: policy id
+        in: path
+        name: policyId
+        required: true
+        type: string
+      - description: Create  body
+        in: body
+        name: createPolicyPermissionsMultipleBody
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/domain.CreatePolicyPermissionBody'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.IdsResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Create multiple policy permissions
+      tags:
+      - PolicyPermissions
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

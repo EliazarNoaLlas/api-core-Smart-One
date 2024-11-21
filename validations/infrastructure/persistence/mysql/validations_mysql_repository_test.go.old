@@ -1,0 +1,124 @@
+///*
+// * File: validations_mysql_repository_test.go
+// * Author: jesus
+// * Copyright: 2023, Smart Cities Peru.
+// * License: MIT
+// *
+// * Purpose:
+// * This file contains the tests of the validations.
+// *
+// * Last Modified: 2023-11-10
+// */
+//
+//package mysql
+//
+//import (
+//	"context"
+//	"fmt"
+//	"testing"
+//
+//	"github.com/DATA-DOG/go-sqlmock"
+//	"github.com/stretchr/testify/assert"
+//
+//	"core/validations/domain"
+//)
+//
+//func TestRecordExists(t *testing.T) {
+//	t.Run(
+//		"When the record exists", func(t *testing.T) {
+//			db, mock, err := sqlmock.New()
+//			if err != nil {
+//				t.Fatal(err)
+//			}
+//
+//			params := domain.RecordExistsParams{
+//				Table:            "especialidad",
+//				IdColumnName:     "esp_id",
+//				IdValue:          "739bbbc9-7e93-11ee-89fd-0242ac110016",
+//				StatusColumnName: nil,
+//				StatusValue:      nil,
+//			}
+//			query := fmt.Sprintf("SELECT COUNT(*) AS total FROM %s WHERE %s = ?", params.Table, params.IdColumnName)
+//			rows := sqlmock.NewRows([]string{"total"}).
+//				AddRow(1)
+//			mock.ExpectQuery(query).
+//				WithArgs(params.IdValue).
+//				WillReturnRows(rows)
+//
+//			r := NewValidationsRepository(db, 60)
+//
+//			err = r.RecordExists(context.Background(), params)
+//
+//			assert.NoError(t, err, "Expected no error")
+//		},
+//	)
+//	t.Run(
+//		"When the record exists and has status", func(t *testing.T) {
+//			db, mock, err := sqlmock.New()
+//			if err != nil {
+//				t.Fatal(err)
+//			}
+//
+//			mock.ExpectQuery("SELECT COUNT").WillReturnRows(sqlmock.NewRows([]string{"COUNT(*)"}).AddRow(1))
+//			statusColumnName := "esp_st"
+//			statusValue := 1
+//			params := domain.RecordExistsParams{
+//				Table:            "especialidad",
+//				IdColumnName:     "esp_id",
+//				IdValue:          "specId",
+//				StatusColumnName: &statusColumnName,
+//				StatusValue:      &statusValue,
+//			}
+//			r := NewValidationsRepository(db, 60)
+//			err = r.RecordExists(context.Background(), params)
+//
+//			assert.NoError(t, err, "Expected no error")
+//		},
+//	)
+//	t.Run(
+//		"When the record does not exist", func(t *testing.T) {
+//			db, mock, err := sqlmock.New()
+//			if err != nil {
+//				t.Fatal(err)
+//			}
+//
+//			mock.ExpectQuery("SELECT COUNT").WillReturnRows(sqlmock.NewRows([]string{"COUNT(*)"}).AddRow(0))
+//
+//			params := domain.RecordExistsParams{
+//				Table:            "especialidad",
+//				IdColumnName:     "esp_id",
+//				IdValue:          "specId",
+//				StatusColumnName: nil,
+//				StatusValue:      nil,
+//			}
+//			r := NewValidationsRepository(db, 60)
+//			err = r.RecordExists(context.Background(), params)
+//
+//			assert.Error(t, err, "Expected error")
+//		},
+//	)
+//	t.Run(
+//		"When the sql-server query fails", func(t *testing.T) {
+//			db, mock, err := sqlmock.New()
+//			if err != nil {
+//				t.Fatal(err)
+//			}
+//
+//			mock.ExpectQuery("SELECT COUNT").WillReturnError(err)
+//
+//			params := domain.RecordExistsParams{
+//				Table:            "especialidad",
+//				IdColumnName:     "esp_id",
+//				IdValue:          "specId",
+//				StatusColumnName: nil,
+//				StatusValue:      nil,
+//			}
+//			r := NewValidationsRepository(db, 60)
+//
+//			err = r.RecordExists(context.Background(), params)
+//
+//			assert.Error(t, err, "Expected error")
+//		},
+//	)
+//
+//}

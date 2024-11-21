@@ -1,0 +1,1039 @@
+definitions:
+  domain.CreateUserBody:
+    properties:
+      password:
+        description: 'Description: the password of the user'
+        example: pepitoPass
+        type: string
+      person:
+        $ref: '#/definitions/domain.Person'
+      person_id:
+        description: 'Description: the person id'
+        example: 739bbbc9-7e93-11ee-89fd-0442ac210932
+        type: string
+      type_id:
+        description: 'Description: the type of the user'
+        example: 739bbbc9-7e93-11ee-89fd-0442ac210931
+        type: string
+      username:
+        description: 'Description: the username of the user'
+        example: pepito.quispe@smartc.pe
+        type: string
+    required:
+    - password
+    - type_id
+    - username
+    type: object
+  domain.LoginUserBody:
+    properties:
+      password:
+        description: 'Description: the password of the user'
+        example: pepitoPass
+        type: string
+      username:
+        description: 'Description: the username of the user'
+        example: pepito.quispe@smartc.pe
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  domain.MenuModule:
+    properties:
+      code:
+        description: 'Description: The code of the menu user'
+        example: logistic
+        type: string
+      created_at:
+        description: 'Description: The date of created the menu user'
+        example: "2023-11-10 08:10:00"
+        type: string
+      description:
+        description: 'Description: The description of the menu user'
+        example: Modulo de logística
+        type: string
+      icon:
+        description: 'Description: The icon of the menu user'
+        example: fa fa-chart
+        type: string
+      id:
+        description: 'Description: The id of the menu user'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+      modules:
+        items:
+          $ref: '#/definitions/domain.MenuModule'
+        type: array
+      name:
+        description: 'Description: The name of the menu user'
+        example: Logistic
+        type: string
+      position:
+        description: 'Description: The position of the menu user'
+        example: 1
+        type: integer
+      views:
+        items:
+          $ref: '#/definitions/domain.ViewMenuUser'
+        type: array
+    required:
+    - code
+    - description
+    - icon
+    - id
+    - name
+    - position
+    - views
+    type: object
+  domain.Merchant:
+    properties:
+      description:
+        description: 'Description: the description of the merchant'
+        example: Almacen Central
+        type: string
+      id:
+        description: 'Description: the id of the merchant'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+      image_path:
+        description: 'Description: the image path of the merchant'
+        example: /images/almacen-central.jpg
+        type: string
+      name:
+        description: 'Description: the name of the merchant'
+        example: Almacen Central
+        type: string
+    required:
+    - description
+    - id
+    - image_path
+    - name
+    type: object
+  domain.MerchantByUser:
+    properties:
+      description:
+        description: 'Description: the description of the merchant'
+        example: Almacen Central
+        type: string
+      id:
+        description: 'Description: the id of the merchant'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+      image_path:
+        description: 'Description: the image path of the merchant'
+        example: /images/almacen-central.jpg
+        type: string
+      name:
+        description: 'Description: the name of the merchant'
+        example: Almacen Central
+        type: string
+      stores:
+        items:
+          $ref: '#/definitions/domain.Store'
+        type: array
+    required:
+    - description
+    - id
+    - image_path
+    - name
+    - stores
+    type: object
+  domain.PaginationResults:
+    properties:
+      current_page:
+        type: integer
+      from:
+        type: integer
+      last_page:
+        type: integer
+      size_page:
+        type: integer
+      to:
+        type: integer
+      total:
+        type: integer
+    required:
+    - current_page
+    - last_page
+    - size_page
+    - total
+    type: object
+  domain.Permissions:
+    properties:
+      code:
+        description: 'Description: The code of the module'
+        example: logistics.requirements
+        type: string
+      id:
+        description: 'Description: user id'
+        example: 0c4001f3-2dd8-4d9f-820d-db7d7d8c85c0
+        type: string
+    required:
+    - code
+    - id
+    type: object
+  domain.Person:
+    properties:
+      document:
+        description: 'Description: the document number of the people'
+        example: "77895428"
+        type: string
+      email:
+        description: 'Description: the email of the people'
+        example: lucyhancco@gmail.com
+        type: string
+      enable:
+        description: 'Description: the status of the people'
+        example: true
+        type: boolean
+      gender:
+        description: 'Description: the gender of the people'
+        example: MASCULINO
+        type: string
+      last_name:
+        description: 'Description: the last name of the people'
+        example: HUILLCA
+        type: string
+      names:
+        description: 'Description: the name of the people'
+        example: LUCY ANDREA
+        type: string
+      phone:
+        description: 'Description: the phone of the people'
+        example: "918547496"
+        type: string
+      surname:
+        description: 'Description: the surname of the people'
+        example: HANCCO
+        type: string
+      type_document_id:
+        description: 'Description: the type of the document'
+        example: 00a58522-93b4-11ee-a040-0242ac11000e
+        type: string
+    required:
+    - document
+    - enable
+    - names
+    - phone
+    - surname
+    - type_document_id
+    type: object
+  domain.PersonByUser:
+    properties:
+      created_at:
+        description: 'Description: the date of created of the people'
+        example: "2023-11-10 08:10:00"
+        type: string
+      document:
+        description: 'Description: the document number of the people'
+        example: "77895428"
+        type: string
+      email:
+        description: 'Description: the email of the people'
+        example: lucyhancco@gmail.com
+        type: string
+      enable:
+        description: 'Description: the status of the people'
+        example: true
+        type: boolean
+      gender:
+        description: 'Description: the gender of the people'
+        example: MASCULINO
+        type: string
+      id:
+        description: 'Description: the id of the people'
+        example: 0abbb86f-9836-11ee-a040-0242ac11000e
+        type: string
+      last_name:
+        description: 'Description: the last name of the people'
+        example: HUILLCA
+        type: string
+      names:
+        description: 'Description: the name of the people'
+        example: LUCY ANDREA
+        type: string
+      phone:
+        description: 'Description: the phone of the people'
+        example: "918547496"
+        type: string
+      surname:
+        description: 'Description: the surname of the people'
+        example: HANCCO
+        type: string
+      type_document:
+        $ref: '#/definitions/domain.TypeDocument'
+    type: object
+  domain.Role:
+    properties:
+      createdAt:
+        description: 'Description: the date of created of the role'
+        example: "2023-11-27 19:47:15"
+        type: string
+      description:
+        description: 'Description: the description of the role'
+        example: Gerencia del conglomerado
+        type: string
+      id:
+        description: 'Description: the id of the role'
+        example: fcdbfacf-8305-11ee-89fd-0242ac110016
+        type: string
+      name:
+        description: 'Description: the id of the role'
+        example: Jefe de Area Residual
+        type: string
+      role_enable:
+        description: 'Description: enable of the role'
+        example: true
+        type: boolean
+      user_role:
+        $ref: '#/definitions/domain.UserRole'
+    required:
+    - user_role
+    type: object
+  domain.RoleUser:
+    properties:
+      created_at:
+        description: 'Description: date of created'
+        example: "2023-11-10 08:10:00"
+        type: string
+      description:
+        description: 'Description: user role description'
+        example: Gerencia general
+        type: string
+      enable:
+        description: 'Description: user role status'
+        example: true
+        type: boolean
+      id:
+        description: 'Description: role user id'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+      name:
+        description: Description:user role name
+        example: Gerencia
+        type: string
+    required:
+    - id
+    type: object
+  domain.Store:
+    properties:
+      id:
+        description: 'Description: the id of the store'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+      name:
+        description: 'Description: the name of the store'
+        example: Almacen Central
+        type: string
+    required:
+    - id
+    - name
+    type: object
+  domain.StoreByUser:
+    properties:
+      id:
+        description: 'Description: the id of the store'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+      merchant:
+        $ref: '#/definitions/domain.Merchant'
+      name:
+        description: 'Description: the name of the store'
+        example: Almacen Central
+        type: string
+    required:
+    - id
+    - merchant
+    - name
+    type: object
+  domain.TypeDocument:
+    properties:
+      abbreviate_description:
+        description: 'Description: abbreviated description of the type of document'
+        example: DNI
+        type: string
+      created_at:
+        description: 'Description: the creation date of the document type'
+        example: "2023-11-10 08:10:00"
+        type: string
+      description:
+        description: 'Description: description of the type of document'
+        example: DOCUMENTO NACIONAL DE IDENTIDAD
+        type: string
+      enable:
+        description: 'Description: abbreviated document type status'
+        example: true
+        type: boolean
+      id:
+        description: 'Description: id of document type'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+      number:
+        description: 'Description: document type number'
+        example: "01"
+        type: string
+    type: object
+  domain.UpdateUserBody:
+    properties:
+      person:
+        $ref: '#/definitions/domain.Person'
+      person_id:
+        description: 'Description: the person id'
+        example: 739bbbc9-7e93-11ee-89fd-0442ac210932
+        type: string
+      type_id:
+        description: 'Description: the type of the user'
+        example: 739bbbc9-7e93-11ee-89fd-0442ac210931
+        type: string
+      username:
+        description: 'Description: the username of the user'
+        example: pepito.quispe@smartc.pe
+        type: string
+    required:
+    - type_id
+    - username
+    type: object
+  domain.User:
+    properties:
+      created_at:
+        description: 'Description: date of created'
+        example: "2023-11-10 08:10:00"
+        type: string
+      id:
+        description: 'Description: user id'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+      user_type:
+        $ref: '#/definitions/domain.UserTypeByUser'
+      username:
+        description: 'Description: username of the user'
+        example: pepito.quispe@smartc.pe
+        type: string
+    required:
+    - id
+    - user_type
+    - username
+    type: object
+  domain.UserMe:
+    properties:
+      created_at:
+        description: 'Description: date of created'
+        example: "2023-11-10 08:10:00"
+        type: string
+      id:
+        description: 'Description: user id'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+      merchants:
+        items:
+          $ref: '#/definitions/domain.MerchantByUser'
+        type: array
+      person:
+        $ref: '#/definitions/domain.PersonByUser'
+      roles:
+        items:
+          $ref: '#/definitions/domain.RoleUser'
+        type: array
+      stores:
+        items:
+          $ref: '#/definitions/domain.StoreByUser'
+        type: array
+      username:
+        description: 'Description: username of the user'
+        example: pepito.quispe@smartc.pe
+        type: string
+    required:
+    - id
+    - merchants
+    - roles
+    - stores
+    - username
+    type: object
+  domain.UserMultiple:
+    properties:
+      created_at:
+        description: 'Description: date of created'
+        example: "2023-11-10 08:10:00"
+        type: string
+      id:
+        description: 'Description: user id'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+      role:
+        items:
+          $ref: '#/definitions/domain.Role'
+        type: array
+      user_type:
+        $ref: '#/definitions/domain.UserTypeByUser'
+      username:
+        description: 'Description: username of the user'
+        example: pepito.quispe@smartc.pe
+        type: string
+    required:
+    - id
+    - role
+    - user_type
+    - username
+    type: object
+  domain.UserRole:
+    properties:
+      user_role_id:
+        description: 'Description: the id of the use role'
+        example: b36f266d-8492-4f0e-8ecb-fef20e098970
+        type: string
+    type: object
+  domain.UserTypeByUser:
+    properties:
+      code:
+        description: 'Description: the code of the user'
+        example: USER_EXTERNAL
+        type: string
+      description:
+        description: 'Description: the description of the user'
+        example: Usuario externo
+        type: string
+      id:
+        description: 'Description: the id of the user'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac113421
+        type: string
+    required:
+    - code
+    - description
+    - id
+    type: object
+  domain.ViewMenuUser:
+    properties:
+      created_at:
+        description: 'Description: the date of created the view menu user'
+        example: "2023-11-10 08:10:00"
+        type: string
+      description:
+        description: 'Description: the description of the view menu user'
+        example: Vista de requerimientos
+        type: string
+      icon:
+        description: 'Description: the icon in for the view menu user'
+        example: fa fa-chart
+        type: string
+      id:
+        description: 'Description: the id of the view menu user'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110000
+        type: string
+      name:
+        description: 'Description: the name of the view menu user'
+        example: Requerimientos
+        type: string
+      url:
+        description: 'Description: the url of the view menu user'
+        example: /logistics/requirements
+        type: string
+    required:
+    - description
+    - icon
+    - id
+    - name
+    - url
+    type: object
+  errorDomain.LayerErr:
+    enum:
+    - domain
+    - infrastructure
+    - interface
+    - use_case
+    type: string
+    x-enum-varnames:
+    - Domain
+    - Infra
+    - Interface
+    - UseCase
+  errorDomain.LevelErr:
+    enum:
+    - info
+    - warning
+    - error
+    - fatal
+    type: string
+    x-enum-varnames:
+    - LevelInfo
+    - LevelWarning
+    - LevelError
+    - LevelFatal
+  errorDomain.SmartError:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      error: {}
+      function:
+        type: string
+      httpStatus:
+        type: integer
+      layer:
+        $ref: '#/definitions/errorDomain.LayerErr'
+      level:
+        $ref: '#/definitions/errorDomain.LevelErr'
+      messages:
+        items:
+          type: string
+        type: array
+      raw:
+        type: string
+    type: object
+  httpResponse.BoolResponse:
+    properties:
+      data:
+        type: boolean
+    required:
+    - data
+    type: object
+  httpResponse.IdResult:
+    properties:
+      data:
+        example: "201"
+        type: string
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  httpResponse.StatusResult:
+    properties:
+      status:
+        example: 200
+        type: integer
+    required:
+    - status
+    type: object
+  rest.GetMeByUser:
+    properties:
+      data:
+        $ref: '#/definitions/domain.UserMe'
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  rest.LoginUserResult:
+    properties:
+      data:
+        type: string
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  rest.PermissionsResult:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.Permissions'
+        type: array
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  rest.ResetPasswordUserResult:
+    properties:
+      data:
+        type: boolean
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  rest.deleteUsersResult:
+    properties:
+      data:
+        type: boolean
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  rest.menuByUserResult:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.MenuModule'
+        type: array
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  rest.multipleUsersResult:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.UserMultiple'
+        type: array
+      pagination:
+        $ref: '#/definitions/domain.PaginationResults'
+      status:
+        type: integer
+    required:
+    - data
+    - pagination
+    - status
+    type: object
+  rest.userResult:
+    properties:
+      data:
+        $ref: '#/definitions/domain.User'
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Login a user
+      parameters:
+      - description: Login Body
+        in: body
+        name: loginBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.LoginUserBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.LoginUserResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      summary: Login
+      tags:
+      - Users
+  /api/v1/core/users:
+    post:
+      consumes:
+      - application/json
+      description: Create a user
+      parameters:
+      - description: Create user body
+        in: body
+        name: createUserBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateUserBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.IdResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Create a user
+      tags:
+      - Users
+  /api/v1/core/users/:
+    get:
+      consumes:
+      - application/json
+      description: get users
+      parameters:
+      - description: the user type id
+        in: query
+        name: type_id
+        type: string
+      - description: the username of the user
+        in: query
+        name: username
+        type: string
+      - description: the role id of the user
+        in: query
+        name: role_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.multipleUsersResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: get users
+      tags:
+      - Users
+  /api/v1/core/users/{userId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a user
+      parameters:
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.deleteUsersResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Delete a user
+      tags:
+      - Users
+    get:
+      consumes:
+      - application/json
+      description: get user by id
+      parameters:
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.userResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: get user
+      tags:
+      - Users
+    put:
+      consumes:
+      - application/json
+      description: Update a user
+      parameters:
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: Update user body
+        in: body
+        name: updateUserBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateUserBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.StatusResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Update a user
+      tags:
+      - Users
+  /api/v1/core/users/{userId}/menu:
+    get:
+      consumes:
+      - application/json
+      description: get menu by user
+      parameters:
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.menuByUserResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: get menu
+      tags:
+      - Users
+  /api/v1/core/users/{userId}/password:
+    put:
+      consumes:
+      - application/json
+      description: Reset password
+      parameters:
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.ResetPasswordUserResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Reset password
+      tags:
+      - Users
+  /api/v1/core/users/me:
+    get:
+      consumes:
+      - application/json
+      description: Get user me using their token
+      parameters:
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.GetMeByUser'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Get user me using their token
+      tags:
+      - Users
+  /api/v1/core/users/me/modules/{codeModule}/permissions:
+    get:
+      consumes:
+      - application/json
+      description: is a method to list permissions of a user in a module
+      parameters:
+      - description: code module
+        in: path
+        name: codeModule
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.PermissionsResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: is a method to list permissions of a user in a module
+      tags:
+      - Users
+  /api/v1/core/users/me/permissions/{codePermission}:
+    get:
+      consumes:
+      - application/json
+      description: is a method to verify permissions of a user
+      parameters:
+      - description: store id
+        in: query
+        name: store_id
+        type: string
+      - description: code permission
+        in: path
+        name: codePermission
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.BoolResponse'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: is a method to verify permissions of a user
+      tags:
+      - Users
+  /api/v1/core/users/menu:
+    get:
+      consumes:
+      - application/json
+      description: Get menu by user using their token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.menuByUserResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Get menu by user using their token
+      tags:
+      - Users
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

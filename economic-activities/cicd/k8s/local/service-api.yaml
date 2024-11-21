@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: economic-activities-core-smartone-api-service
+  namespace: ${NAMESPACE}
+spec:
+  selector:
+    app: economic-activities-core-smartone
+  ports:
+    - protocol: TCP
+      port: 9015
+      targetPort: 80
+  type: NodePort

@@ -1,0 +1,275 @@
+definitions:
+  domain.CreateReceiptTypeBody:
+    properties:
+      description:
+        description: 'Description: the description of the receipt type'
+        example: activo fijo
+        type: string
+      enable:
+        description: 'Description: the status of the receipt type'
+        example: true
+        type: boolean
+      sunat_code:
+        description: 'Description: the sunat code of the receipt type'
+        example: "2"
+        type: string
+    required:
+    - description
+    - enable
+    - sunat_code
+    type: object
+  domain.ReceiptType:
+    properties:
+      created_at:
+        description: 'Description: the date of creation of the receipt type'
+        example: "2024-01-31 08:10:00"
+        type: string
+      created_by:
+        description: 'Description: the date of creation of the receipt type'
+        example: 91fb86bd-da46-414b-97a1-fcdaa8cd35d1
+        type: string
+      description:
+        description: 'Description: the description of the receipt type'
+        example: activo fijo
+        type: string
+      enable:
+        description: 'Description: the status of the receipt type'
+        example: true
+        type: boolean
+      id:
+        description: 'Description: id of the receipt type'
+        example: 18f7f9c2-b00a-42e4-a469-ea4c01c180dd
+        type: string
+      sunat_code:
+        description: 'Description: the sunat code of the receipt type'
+        example: "2"
+        type: string
+    required:
+    - created_by
+    - description
+    - enable
+    - id
+    - sunat_code
+    type: object
+  domain.UpdateReceiptTypeBody:
+    properties:
+      description:
+        description: 'Description: the description of the receipt type'
+        example: activo fijo
+        type: string
+      enable:
+        description: 'Description: the status of the receipt type'
+        example: true
+        type: boolean
+      sunat_code:
+        description: 'Description: the sunat code of the receipt type'
+        example: "2"
+        type: string
+    required:
+    - description
+    - enable
+    - sunat_code
+    type: object
+  errorDomain.LayerErr:
+    enum:
+    - domain
+    - infrastructure
+    - interface
+    - use_case
+    type: string
+    x-enum-varnames:
+    - Domain
+    - Infra
+    - Interface
+    - UseCase
+  errorDomain.LevelErr:
+    enum:
+    - info
+    - warning
+    - error
+    - fatal
+    type: string
+    x-enum-varnames:
+    - LevelInfo
+    - LevelWarning
+    - LevelError
+    - LevelFatal
+  errorDomain.SmartError:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      error: {}
+      function:
+        type: string
+      httpStatus:
+        type: integer
+      layer:
+        $ref: '#/definitions/errorDomain.LayerErr'
+      level:
+        $ref: '#/definitions/errorDomain.LevelErr'
+      messages:
+        items:
+          type: string
+        type: array
+      raw:
+        type: string
+    type: object
+  httpResponse.IdResult:
+    properties:
+      data:
+        example: "201"
+        type: string
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  httpResponse.StatusResult:
+    properties:
+      status:
+        example: 200
+        type: integer
+    required:
+    - status
+    type: object
+  rest.deleteReceiptTypesResult:
+    properties:
+      data:
+        type: boolean
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  rest.receiptTypesResult:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.ReceiptType'
+        type: array
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/core/receipt_types:
+    get:
+      consumes:
+      - application/json
+      description: Get receipt types
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.receiptTypesResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Get classifications receipt types
+      tags:
+      - Receipt Types
+    post:
+      consumes:
+      - application/json
+      description: Create receipt type
+      parameters:
+      - description: Create receipt type body
+        in: body
+        name: ReceiptTypeBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateReceiptTypeBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.IdResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Create a receipt type
+      tags:
+      - Receipt Types
+  /api/v1/core/receipt_types/{receiptTypeId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete receipt type
+      parameters:
+      - description: Receipt Types id
+        in: path
+        name: receiptTypeId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.deleteReceiptTypesResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Delete a receipt type
+      tags:
+      - Receipt Types
+    put:
+      consumes:
+      - application/json
+      description: Update receipt type
+      parameters:
+      - description: Receipt Types id
+        in: path
+        name: receiptTypeId
+        required: true
+        type: string
+      - description: Update receipt type body
+        in: body
+        name: ReceiptTypeBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateReceiptTypeBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.StatusResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Update a receipt type
+      tags:
+      - Receipt Types
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

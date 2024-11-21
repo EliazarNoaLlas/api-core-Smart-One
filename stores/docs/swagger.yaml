@@ -1,0 +1,316 @@
+definitions:
+  domain.CreateStoreBody:
+    properties:
+      name:
+        description: 'Description: the name of the store'
+        example: Obra av. 28 julio
+        type: string
+      shortname:
+        description: 'Description: the shortname of the store'
+        example: Obra 28
+        type: string
+      store_type_id:
+        description: 'Description: the store_type_id of the store'
+        example: 739bbbc9-7e93-11ee-89fd-042hs5278420
+        type: string
+    required:
+    - name
+    - shortname
+    - store_type_id
+    type: object
+  domain.PaginationResults:
+    properties:
+      current_page:
+        type: integer
+      from:
+        type: integer
+      last_page:
+        type: integer
+      size_page:
+        type: integer
+      to:
+        type: integer
+      total:
+        type: integer
+    required:
+    - current_page
+    - last_page
+    - size_page
+    - total
+    type: object
+  domain.Store:
+    properties:
+      created_at:
+        description: 'Description: the created_at of the store'
+        example: "2023-11-10 08:10:00"
+        type: string
+      id:
+        description: 'Description: the id of the store'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac110016
+        type: string
+      merchant_id:
+        description: 'Description: the merchant_id of the store'
+        example: 739bbbc9-7e93-11ee-89fd-0442ac210931
+        type: string
+      name:
+        description: 'Description: the name of the store'
+        example: Obra av. 28 julio
+        type: string
+      shortname:
+        description: 'Description: the shortname of the store'
+        example: Obra 28
+        type: string
+      store_type:
+        $ref: '#/definitions/domain.StoreTypeByStore'
+    required:
+    - id
+    - merchant_id
+    - name
+    - shortname
+    type: object
+  domain.StoreTypeByStore:
+    properties:
+      abbreviation:
+        description: 'Description: the abbreviation of the store type'
+        example: Maq.
+        type: string
+      description:
+        description: 'Description: the description of the store type'
+        example: Maquinaria
+        type: string
+      id:
+        description: 'Description: the id of the store type'
+        example: 739bbbc9-7e93-11ee-89fd-0242ac113421
+        type: string
+    required:
+    - abbreviation
+    - description
+    - id
+    type: object
+  errorDomain.LayerErr:
+    enum:
+    - domain
+    - infrastructure
+    - interface
+    - use_case
+    type: string
+    x-enum-varnames:
+    - Domain
+    - Infra
+    - Interface
+    - UseCase
+  errorDomain.LevelErr:
+    enum:
+    - info
+    - warning
+    - error
+    - fatal
+    type: string
+    x-enum-varnames:
+    - LevelInfo
+    - LevelWarning
+    - LevelError
+    - LevelFatal
+  errorDomain.SmartError:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      error: {}
+      function:
+        type: string
+      httpStatus:
+        type: integer
+      layer:
+        $ref: '#/definitions/errorDomain.LayerErr'
+      level:
+        $ref: '#/definitions/errorDomain.LevelErr'
+      messages:
+        items:
+          type: string
+        type: array
+      raw:
+        type: string
+    type: object
+  httpResponse.IdResult:
+    properties:
+      data:
+        example: "201"
+        type: string
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  httpResponse.StatusResult:
+    properties:
+      status:
+        example: 200
+        type: integer
+    required:
+    - status
+    type: object
+  rest.deleteStoresResult:
+    properties:
+      data:
+        type: boolean
+      status:
+        type: integer
+    required:
+    - data
+    - status
+    type: object
+  rest.storesResult:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.Store'
+        type: array
+      pagination:
+        $ref: '#/definitions/domain.PaginationResults'
+      status:
+        type: integer
+    required:
+    - data
+    - pagination
+    - status
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/core/merchants/{merchantId}/stores:
+    get:
+      consumes:
+      - application/json
+      description: Get stores
+      parameters:
+      - description: merchant id
+        in: path
+        name: merchantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.storesResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Get stores
+      tags:
+      - Stores
+    post:
+      consumes:
+      - application/json
+      description: Create store
+      parameters:
+      - description: merchant id
+        in: path
+        name: merchantId
+        required: true
+        type: string
+      - description: Create store body
+        in: body
+        name: createStoreBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateStoreBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.IdResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Create store
+      tags:
+      - Stores
+  /api/v1/core/merchants/{merchantId}/stores/{storeId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete store
+      parameters:
+      - description: merchant id
+        in: path
+        name: merchantId
+        required: true
+        type: string
+      - description: store id
+        in: path
+        name: storeId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/rest.deleteStoresResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Delete a store
+      tags:
+      - Stores
+    put:
+      consumes:
+      - application/json
+      description: Update store
+      parameters:
+      - description: merchant id
+        in: path
+        name: merchantId
+        required: true
+        type: string
+      - description: store id
+        in: path
+        name: storeId
+        required: true
+        type: string
+      - description: Update store body
+        in: body
+        name: updateStoreBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateStoreBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Request
+          schema:
+            $ref: '#/definitions/httpResponse.StatusResult'
+        "500":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorDomain.SmartError'
+      security:
+      - BearerAuth: []
+      summary: Update store
+      tags:
+      - Stores
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

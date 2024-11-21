@@ -1,0 +1,428 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/core/user_types": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get user types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Types"
+                ],
+                "summary": "Get user types",
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/rest.userTypesResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create user type",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Types"
+                ],
+                "summary": "Create user type",
+                "parameters": [
+                    {
+                        "description": "Create user type body",
+                        "name": "createUserTypeBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.CreateUserTypeBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/httpResponse.IdResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/core/user_types/{userTypeId}": {
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update user type",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Types"
+                ],
+                "summary": "Update user type",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user type id",
+                        "name": "userTypeId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update user type body",
+                        "name": "updateUserTypeBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.UpdateUserTypeBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/httpResponse.StatusResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Delete user type",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Types"
+                ],
+                "summary": "Delete user type",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "store type id",
+                        "name": "userTypeId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/rest.deleteUserTypesResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "domain.CreateUserTypeBody": {
+            "type": "object",
+            "required": [
+                "code",
+                "description"
+            ],
+            "properties": {
+                "code": {
+                    "description": "Description: the code of the user type",
+                    "type": "string",
+                    "example": "USER_EXTERNAL"
+                },
+                "description": {
+                    "description": "Description: the description of the user type",
+                    "type": "string",
+                    "example": "Usuario externo"
+                },
+                "enable": {
+                    "description": "Description: the id status the user type",
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "domain.PaginationResults": {
+            "type": "object",
+            "required": [
+                "current_page",
+                "last_page",
+                "size_page",
+                "total"
+            ],
+            "properties": {
+                "current_page": {
+                    "type": "integer"
+                },
+                "from": {
+                    "type": "integer"
+                },
+                "last_page": {
+                    "type": "integer"
+                },
+                "size_page": {
+                    "type": "integer"
+                },
+                "to": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "domain.UpdateUserTypeBody": {
+            "type": "object",
+            "required": [
+                "code",
+                "description"
+            ],
+            "properties": {
+                "code": {
+                    "description": "Description: the code of the user type",
+                    "type": "string",
+                    "example": "USER_EXTERNAL"
+                },
+                "description": {
+                    "description": "Description: the description of the user type",
+                    "type": "string",
+                    "example": "Usuario externo"
+                },
+                "enable": {
+                    "description": "Description: the id status the user type",
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "domain.UserType": {
+            "type": "object",
+            "required": [
+                "code",
+                "description",
+                "enable",
+                "id"
+            ],
+            "properties": {
+                "code": {
+                    "description": "Description: the code of the user type",
+                    "type": "string",
+                    "example": "USER_EXTERNAL"
+                },
+                "created_at": {
+                    "description": "Description: the date of created the user type",
+                    "type": "string",
+                    "example": "2023-11-10 08:10:00"
+                },
+                "description": {
+                    "description": "Description: the description of the user type",
+                    "type": "string",
+                    "example": "Usuario externo"
+                },
+                "enable": {
+                    "description": "Description: the id status the user type",
+                    "type": "boolean",
+                    "example": true
+                },
+                "id": {
+                    "description": "Description: the id of the user type",
+                    "type": "string",
+                    "example": "739bbbc9-7e93-11ee-89fd-0242ac110016"
+                }
+            }
+        },
+        "errorDomain.LayerErr": {
+            "type": "string",
+            "enum": [
+                "domain",
+                "infrastructure",
+                "interface",
+                "use_case"
+            ],
+            "x-enum-varnames": [
+                "Domain",
+                "Infra",
+                "Interface",
+                "UseCase"
+            ]
+        },
+        "errorDomain.LevelErr": {
+            "type": "string",
+            "enum": [
+                "info",
+                "warning",
+                "error",
+                "fatal"
+            ],
+            "x-enum-varnames": [
+                "LevelInfo",
+                "LevelWarning",
+                "LevelError",
+                "LevelFatal"
+            ]
+        },
+        "errorDomain.SmartError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "error": {},
+                "function": {
+                    "type": "string"
+                },
+                "httpStatus": {
+                    "type": "integer"
+                },
+                "layer": {
+                    "$ref": "#/definitions/errorDomain.LayerErr"
+                },
+                "level": {
+                    "$ref": "#/definitions/errorDomain.LevelErr"
+                },
+                "messages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "raw": {
+                    "type": "string"
+                }
+            }
+        },
+        "httpResponse.IdResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "string",
+                    "example": "201"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "httpResponse.StatusResult": {
+            "type": "object",
+            "required": [
+                "status"
+            ],
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "example": 200
+                }
+            }
+        },
+        "rest.deleteUserTypesResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "boolean"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.userTypesResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "pagination",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/domain.UserType"
+                    }
+                },
+                "pagination": {
+                    "$ref": "#/definitions/domain.PaginationResults"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

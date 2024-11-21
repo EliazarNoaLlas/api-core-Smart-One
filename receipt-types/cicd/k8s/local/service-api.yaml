@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: receipt-types-core-smartone-api-service
+  namespace: ${NAMESPACE}
+spec:
+  selector:
+    app: receipt-types-core-smartone
+  ports:
+    - protocol: TCP
+      port: 9018
+      targetPort: 80
+  type: NodePort

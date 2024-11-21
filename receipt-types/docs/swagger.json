@@ -1,0 +1,403 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/core/receipt_types": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get receipt types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Receipt Types"
+                ],
+                "summary": "Get classifications receipt types",
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/rest.receiptTypesResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create receipt type",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Receipt Types"
+                ],
+                "summary": "Create a receipt type",
+                "parameters": [
+                    {
+                        "description": "Create receipt type body",
+                        "name": "ReceiptTypeBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.CreateReceiptTypeBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/httpResponse.IdResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/core/receipt_types/{receiptTypeId}": {
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update receipt type",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Receipt Types"
+                ],
+                "summary": "Update a receipt type",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Receipt Types id",
+                        "name": "receiptTypeId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update receipt type body",
+                        "name": "ReceiptTypeBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.UpdateReceiptTypeBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/httpResponse.StatusResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Delete receipt type",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Receipt Types"
+                ],
+                "summary": "Delete a receipt type",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Receipt Types id",
+                        "name": "receiptTypeId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Request",
+                        "schema": {
+                            "$ref": "#/definitions/rest.deleteReceiptTypesResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorDomain.SmartError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "domain.CreateReceiptTypeBody": {
+            "type": "object",
+            "required": [
+                "description",
+                "enable",
+                "sunat_code"
+            ],
+            "properties": {
+                "description": {
+                    "description": "Description: the description of the receipt type",
+                    "type": "string",
+                    "example": "activo fijo"
+                },
+                "enable": {
+                    "description": "Description: the status of the receipt type",
+                    "type": "boolean",
+                    "example": true
+                },
+                "sunat_code": {
+                    "description": "Description: the sunat code of the receipt type",
+                    "type": "string",
+                    "example": "2"
+                }
+            }
+        },
+        "domain.ReceiptType": {
+            "type": "object",
+            "required": [
+                "created_by",
+                "description",
+                "enable",
+                "id",
+                "sunat_code"
+            ],
+            "properties": {
+                "created_at": {
+                    "description": "Description: the date of creation of the receipt type",
+                    "type": "string",
+                    "example": "2024-01-31 08:10:00"
+                },
+                "created_by": {
+                    "description": "Description: the date of creation of the receipt type",
+                    "type": "string",
+                    "example": "91fb86bd-da46-414b-97a1-fcdaa8cd35d1"
+                },
+                "description": {
+                    "description": "Description: the description of the receipt type",
+                    "type": "string",
+                    "example": "activo fijo"
+                },
+                "enable": {
+                    "description": "Description: the status of the receipt type",
+                    "type": "boolean",
+                    "example": true
+                },
+                "id": {
+                    "description": "Description: id of the receipt type",
+                    "type": "string",
+                    "example": "18f7f9c2-b00a-42e4-a469-ea4c01c180dd"
+                },
+                "sunat_code": {
+                    "description": "Description: the sunat code of the receipt type",
+                    "type": "string",
+                    "example": "2"
+                }
+            }
+        },
+        "domain.UpdateReceiptTypeBody": {
+            "type": "object",
+            "required": [
+                "description",
+                "enable",
+                "sunat_code"
+            ],
+            "properties": {
+                "description": {
+                    "description": "Description: the description of the receipt type",
+                    "type": "string",
+                    "example": "activo fijo"
+                },
+                "enable": {
+                    "description": "Description: the status of the receipt type",
+                    "type": "boolean",
+                    "example": true
+                },
+                "sunat_code": {
+                    "description": "Description: the sunat code of the receipt type",
+                    "type": "string",
+                    "example": "2"
+                }
+            }
+        },
+        "errorDomain.LayerErr": {
+            "type": "string",
+            "enum": [
+                "domain",
+                "infrastructure",
+                "interface",
+                "use_case"
+            ],
+            "x-enum-varnames": [
+                "Domain",
+                "Infra",
+                "Interface",
+                "UseCase"
+            ]
+        },
+        "errorDomain.LevelErr": {
+            "type": "string",
+            "enum": [
+                "info",
+                "warning",
+                "error",
+                "fatal"
+            ],
+            "x-enum-varnames": [
+                "LevelInfo",
+                "LevelWarning",
+                "LevelError",
+                "LevelFatal"
+            ]
+        },
+        "errorDomain.SmartError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "error": {},
+                "function": {
+                    "type": "string"
+                },
+                "httpStatus": {
+                    "type": "integer"
+                },
+                "layer": {
+                    "$ref": "#/definitions/errorDomain.LayerErr"
+                },
+                "level": {
+                    "$ref": "#/definitions/errorDomain.LevelErr"
+                },
+                "messages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "raw": {
+                    "type": "string"
+                }
+            }
+        },
+        "httpResponse.IdResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "string",
+                    "example": "201"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "httpResponse.StatusResult": {
+            "type": "object",
+            "required": [
+                "status"
+            ],
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "example": 200
+                }
+            }
+        },
+        "rest.deleteReceiptTypesResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "boolean"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.receiptTypesResult": {
+            "type": "object",
+            "required": [
+                "data",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/domain.ReceiptType"
+                    }
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}
